@@ -645,6 +645,46 @@
       border-radius: 6px; font-size: 0.85rem; line-height: 1.6;
       color: var(--text); font-style: italic;
     }
+    /* FAQ section */
+    .faq-item { border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .faq-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .faq-q { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+    .faq-a { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
+    /* Welcome modal */
+    .welcome-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0,0,0,0.75);
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px;
+    }
+    .welcome-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 36px;
+      max-width: 520px; width: 100%;
+      box-shadow: 0 12px 60px rgba(0,0,0,0.6);
+      text-align: center;
+    }
+    .welcome-logo { font-size: 2rem; margin-bottom: 4px; }
+    .welcome-appname { font-size: 1.8rem; font-weight: 800; color: var(--accent); vertical-align: middle; }
+    .welcome-tagline { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 20px; }
+    .welcome-intro { font-size: 0.9rem; color: var(--text); margin-bottom: 20px; line-height: 1.5; }
+    .welcome-lang-grid {
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px;
+    }
+    .welcome-lang-btn {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 8px; padding: 8px 14px; font-size: 0.82rem;
+      color: var(--text); cursor: pointer; transition: border-color 0.15s, background 0.15s;
+    }
+    .welcome-lang-btn:hover, .welcome-lang-btn.active {
+      border-color: var(--accent); background: rgba(99,102,241,0.12); color: var(--accent); font-weight: 600;
+    }
+    .welcome-faq-hint { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 22px; line-height: 1.5; }
+    .welcome-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .welcome-btn { min-width: 190px; }
+
     .ai-priority-select {
       border: none;
       border-radius: 4px;
@@ -1152,7 +1192,7 @@
       <div class="chuck-fist">👊</div>
       <div>
         <div class="chuck-name">ChuckUp</div>
-        <div class="chuck-tagline">Punch your meetings &amp; emails into ClickUp</div>
+        <div class="chuck-tagline" data-i18n="app.tagline">Punch your meetings &amp; emails</div>
       </div>
       <div class="chuck-fist-right">👊</div>
     </div>
@@ -1418,11 +1458,37 @@
         <div class="field-group">
           <label data-i18n="settings.reference.label">Quick reference</label>
           <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
-            <div style="font-size:0.8rem;color:var(--text-muted);display:flex;gap:8px;align-items:center;"><span style="font-size:1rem;">⚡</span> <span><b style="color:var(--text);">Process</b> — Upload PDF → AI extract → Push to ClickUp</span></div>
-            <div style="font-size:0.8rem;color:var(--text-muted);display:flex;gap:8px;align-items:center;"><span style="font-size:1rem;">👁️</span> <span><b style="color:var(--text);">NorrisEyes</b> — Live task dashboard from ClickUp</span></div>
+            <div style="font-size:0.8rem;color:var(--text-muted);display:flex;gap:8px;align-items:center;"><span style="font-size:1rem;">⚡</span> <span><b style="color:var(--text);">Process</b><span data-i18n="ref.process"> — Upload PDF → AI extract → Push to your platform</span></span></div>
+            <div style="font-size:0.8rem;color:var(--text-muted);display:flex;gap:8px;align-items:center;"><span style="font-size:1rem;">👁️</span> <span><b style="color:var(--text);">NorrisEyes</b><span data-i18n="ref.norriseyes"> — Live task dashboard</span></span></div>
             <div style="font-size:0.8rem;color:var(--text-muted);display:flex;gap:8px;align-items:center;"><span style="font-size:1rem;">📚</span> <span><b style="color:var(--text);">History</b> — Past analyses, re-process, cost tracking</span></div>
             <div style="font-size:0.8rem;color:var(--text-muted);display:flex;gap:8px;align-items:center;"><span style="font-size:1rem;">💰</span> <span><b style="color:var(--text);">Cost Control</b> — API usage, model routing, spend</span></div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="card-faq">
+      <div class="card-header"><h2 data-i18n="faq.title">❓ FAQ</h2></div>
+      <div style="display:flex;flex-direction:column;gap:14px;padding:4px 0;">
+        <div class="faq-item">
+          <div class="faq-q" data-i18n="faq.q1">Is my data safe?</div>
+          <div class="faq-a" data-i18n="faq.a1">Your API keys and analyses stay in your own browser (localStorage). Nothing is sent to any server — the app is just an HTML file.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" data-i18n="faq.q2">Will I see updates automatically?</div>
+          <div class="faq-a" data-i18n="faq.a2">Yes. The app is served from a shared link. When it's updated, you'll get the new version automatically the next time you open the link.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" data-i18n="faq.q3">If I clear my browser, do I lose everything?</div>
+          <div class="faq-a" data-i18n="faq.a3">Yes — your credentials and history are stored locally. API keys are easy to re-enter, but your analysis history would be lost.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" data-i18n="faq.q4">Can I use it offline?</div>
+          <div class="faq-a" data-i18n="faq.a4">No. An internet connection is required to call AI providers and push platforms. The app itself loads from the shared link.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" data-i18n="faq.q5">What is the Guided Tour?</div>
+          <div class="faq-a" data-i18n="faq.a5">A step-by-step walkthrough of every feature. You can relaunch it anytime from the "Getting Started" section above.</div>
         </div>
       </div>
     </div>
@@ -3819,6 +3885,19 @@ const TRANSLATIONS = {
     'toast.deleted.title':'Deleted','toast.deleted.msg':'Entry removed from history.','toast.history.cleared.title':'History Cleared','toast.history.cleared.msg':'All entries deleted.',
     'toast.loaded.title':'Loaded','toast.loaded.msg':'"{title}" loaded — ready to re-export or re-process.','toast.notranscript.title':'No transcript','toast.notranscript.msg':'This entry was saved before re-process support. Re-upload the PDF.',
     'toast.meeting.title':'Meeting Note Created','toast.meeting.msg':'Task "{name}" pushed successfully.','toast.clickup.error':'ClickUp Error','toast.push.error':'Push Error','toast.actions.title':'Action Items Pushed','toast.status.title':'Status updated','toast.fetchfailed':'Fetch failed',
+    'app.tagline':'Punch your meetings & emails',
+    'ref.process':' — Upload PDF → AI extract → Push to your platform',
+    'ref.norriseyes':' — Live task dashboard',
+    'faq.title':'❓ FAQ',
+    'faq.q1':'Is my data safe?','faq.a1':'Your API keys and analyses stay in your own browser (localStorage). Nothing is sent to any server — the app is just an HTML file.',
+    'faq.q2':'Will I see updates automatically?','faq.a2':"Yes. The app is served from a shared link. When it's updated, you'll get the new version automatically the next time you open the link.",
+    'faq.q3':'If I clear my browser, do I lose everything?','faq.a3':'Yes — your credentials and history are stored locally. API keys are easy to re-enter, but your analysis history would be lost.',
+    'faq.q4':'Can I use it offline?','faq.a4':'No. An internet connection is required to call AI providers and push platforms. The app itself loads from the shared link.',
+    'faq.q5':'What is the Guided Tour?','faq.a5':'A step-by-step walkthrough of every feature. You can relaunch it anytime from the "Getting Started" section above.',
+    'welcome.intro':'Welcome! Before you begin, choose your preferred language. You can change it anytime in Settings.',
+    'welcome.faqhint':'💡 Find answers to common questions in the FAQ section inside Settings.',
+    'welcome.starttour':'▶  Start Guided Tour',
+    'welcome.skip':'Skip — Take me to the app',
   },
   'pt-pt': {
     'tab.process':'⚡ Processar ⚡','tab.history':'📚 Histórico 📚','tab.costcontrol':'💰 Controlo de Custos 💰','tab.settings':'⚙️ Definições ⚙️',
@@ -3890,6 +3969,19 @@ const TRANSLATIONS = {
     'toast.deleted.title':'Eliminado','toast.deleted.msg':'Entrada removida do histórico.','toast.history.cleared.title':'Histórico limpo','toast.history.cleared.msg':'Todas as entradas eliminadas.',
     'toast.loaded.title':'Carregado','toast.loaded.msg':'"{title}" carregado — pronto para re-exportar ou reprocessar.','toast.notranscript.title':'Sem transcrição','toast.notranscript.msg':'Esta entrada foi guardada antes do suporte a reprocessamento. Carregue o PDF novamente.',
     'toast.meeting.title':'Nota de Reunião criada','toast.meeting.msg':'Tarefa "{name}" enviada com sucesso.','toast.clickup.error':'Erro ClickUp','toast.push.error':'Erro ao enviar','toast.actions.title':'Tarefas de acção enviadas','toast.status.title':'Estado actualizado','toast.fetchfailed':'Falha ao carregar',
+    'app.tagline':'Transforma reuniões e emails em acções',
+    'ref.process':' — Upload de PDF → Extracção IA → Envio para a plataforma',
+    'ref.norriseyes':' — Dashboard de tarefas em tempo real',
+    'faq.title':'❓ FAQ',
+    'faq.q1':'Os meus dados estão seguros?','faq.a1':'As suas chaves API e análises ficam no seu próprio browser (localStorage). Nada é enviado para qualquer servidor — a app é apenas um ficheiro HTML.',
+    'faq.q2':'Verei actualizações automaticamente?','faq.a2':'Sim. A app é servida a partir de um link partilhado. Quando for actualizada, terá a nova versão automaticamente da próxima vez que abrir o link.',
+    'faq.q3':'Se limpar o browser, perco tudo?','faq.a3':'Sim — as credenciais e o histórico estão guardados localmente. As chaves API são fáceis de voltar a inserir, mas o histórico de análises seria perdido.',
+    'faq.q4':'Posso usá-la sem internet?','faq.a4':'Não. É necessária uma ligação à internet para chamar os fornecedores de IA e as plataformas de destino. A própria app carrega a partir do link.',
+    'faq.q5':'O que é o Tour Guiado?','faq.a5':'Um guia passo a passo de todas as funcionalidades. Pode reiniciá-lo a qualquer momento na secção "Começar" acima.',
+    'welcome.intro':'Bem-vindo! Antes de começar, escolha o seu idioma preferido. Pode alterá-lo a qualquer momento nas Definições.',
+    'welcome.faqhint':'💡 Encontre respostas a dúvidas comuns na secção FAQ dentro das Definições.',
+    'welcome.starttour':'▶  Iniciar Tour Guiado',
+    'welcome.skip':'Saltar — Ir para a app',
   },
   'pt-br': {
     'tab.process':'⚡ Processar ⚡','tab.history':'📚 Histórico 📚','tab.costcontrol':'💰 Controle de Custos 💰','tab.settings':'⚙️ Configurações ⚙️',
@@ -3961,6 +4053,19 @@ const TRANSLATIONS = {
     'toast.deleted.title':'Excluído','toast.deleted.msg':'Entrada removida do histórico.','toast.history.cleared.title':'Histórico limpo','toast.history.cleared.msg':'Todas as entradas excluídas.',
     'toast.loaded.title':'Carregado','toast.loaded.msg':'"{title}" carregado — pronto para re-exportar ou reprocessar.','toast.notranscript.title':'Sem transcrição','toast.notranscript.msg':'Esta entrada foi salva antes do suporte a reprocessamento. Faça upload do PDF novamente.',
     'toast.meeting.title':'Nota de Reunião criada','toast.meeting.msg':'Tarefa "{name}" enviada com sucesso.','toast.clickup.error':'Erro ClickUp','toast.push.error':'Erro ao enviar','toast.actions.title':'Tarefas de ação enviadas','toast.status.title':'Status atualizado','toast.fetchfailed':'Falha ao carregar',
+    'app.tagline':'Transforme reuniões e e-mails em ações',
+    'ref.process':' — Upload de PDF → Extração IA → Envio para a plataforma',
+    'ref.norriseyes':' — Dashboard de tarefas em tempo real',
+    'faq.title':'❓ FAQ',
+    'faq.q1':'Meus dados estão seguros?','faq.a1':'Suas chaves de API e análises ficam no seu próprio navegador (localStorage). Nada é enviado para nenhum servidor — o app é apenas um arquivo HTML.',
+    'faq.q2':'Verei atualizações automaticamente?','faq.a2':'Sim. O app é servido a partir de um link compartilhado. Quando for atualizado, você terá a nova versão automaticamente na próxima vez que abrir o link.',
+    'faq.q3':'Se limpar o navegador, perco tudo?','faq.a3':'Sim — suas credenciais e histórico ficam armazenados localmente. As chaves de API são fáceis de reinserir, mas seu histórico de análises seria perdido.',
+    'faq.q4':'Posso usar sem internet?','faq.a4':'Não. É necessária uma conexão com a internet para chamar os provedores de IA e as plataformas de destino. O próprio app carrega a partir do link.',
+    'faq.q5':'O que é o Tour Guiado?','faq.a5':'Um guia passo a passo de todos os recursos. Você pode reiniciá-lo a qualquer momento na seção "Começando" acima.',
+    'welcome.intro':'Bem-vindo! Antes de começar, escolha o idioma de sua preferência. Você pode alterá-lo a qualquer momento nas Configurações.',
+    'welcome.faqhint':'💡 Encontre respostas a dúvidas comuns na seção FAQ dentro das Configurações.',
+    'welcome.starttour':'▶  Iniciar Tour Guiado',
+    'welcome.skip':'Pular — Ir para o app',
   },
   es: {
     'tab.process':'⚡ Procesar ⚡','tab.history':'📚 Historial 📚','tab.costcontrol':'💰 Control de Costos 💰','tab.settings':'⚙️ Configuración ⚙️',
@@ -4032,6 +4137,19 @@ const TRANSLATIONS = {
     'toast.deleted.title':'Eliminado','toast.deleted.msg':'Entrada eliminada del historial.','toast.history.cleared.title':'Historial borrado','toast.history.cleared.msg':'Todas las entradas eliminadas.',
     'toast.loaded.title':'Cargado','toast.loaded.msg':'"{title}" cargado — listo para re-exportar o reprocesar.','toast.notranscript.title':'Sin transcripción','toast.notranscript.msg':'Esta entrada se guardó antes del soporte de reprocesamiento. Sube el PDF nuevamente.',
     'toast.meeting.title':'Nota de Reunión creada','toast.meeting.msg':'Tarea "{name}" enviada con éxito.','toast.clickup.error':'Error ClickUp','toast.push.error':'Error al enviar','toast.actions.title':'Tareas de acción enviadas','toast.status.title':'Estado actualizado','toast.fetchfailed':'Error al cargar',
+    'app.tagline':'Convierte reuniones y correos en acciones',
+    'ref.process':' — Subir PDF → Extracción IA → Enviar a tu plataforma',
+    'ref.norriseyes':' — Panel de tareas en tiempo real',
+    'faq.title':'❓ FAQ',
+    'faq.q1':'¿Mis datos están seguros?','faq.a1':'Tus claves API y análisis permanecen en tu propio navegador (localStorage). Nada se envía a ningún servidor — la app es solo un archivo HTML.',
+    'faq.q2':'¿Veré las actualizaciones automáticamente?','faq.a2':'Sí. La app se sirve desde un enlace compartido. Cuando se actualice, obtendrás la nueva versión automáticamente la próxima vez que abras el enlace.',
+    'faq.q3':'¿Si borro el navegador, pierdo todo?','faq.a3':'Sí — tus credenciales e historial se almacenan localmente. Las claves API son fáciles de volver a introducir, pero tu historial de análisis se perdería.',
+    'faq.q4':'¿Puedo usarla sin internet?','faq.a4':'No. Se requiere conexión a internet para llamar a los proveedores de IA y plataformas de destino. La propia app carga desde el enlace.',
+    'faq.q5':'¿Qué es el Tour Guiado?','faq.a5':'Una guía paso a paso de todas las funciones. Puedes relanzarlo en cualquier momento desde la sección "Primeros Pasos" de arriba.',
+    'welcome.intro':'¡Bienvenido! Antes de empezar, elige tu idioma preferido. Puedes cambiarlo en cualquier momento en Configuración.',
+    'welcome.faqhint':'💡 Encuentra respuestas a preguntas frecuentes en la sección FAQ dentro de Configuración.',
+    'welcome.starttour':'▶  Iniciar Tour Guiado',
+    'welcome.skip':'Saltar — Llevarme a la app',
   },
   fr: {
     'tab.process':'⚡ Traiter ⚡','tab.history':'📚 Historique 📚','tab.costcontrol':'💰 Contrôle des Coûts 💰','tab.settings':'⚙️ Paramètres ⚙️',
@@ -4103,6 +4221,19 @@ const TRANSLATIONS = {
     'toast.deleted.title':'Supprimé','toast.deleted.msg':"Entrée supprimée de l'historique.",'toast.history.cleared.title':'Historique effacé','toast.history.cleared.msg':'Toutes les entrées supprimées.',
     'toast.loaded.title':'Chargé','toast.loaded.msg':'"{title}" chargé — prêt à re-exporter ou retraiter.','toast.notranscript.title':'Pas de transcription','toast.notranscript.msg':'Cette entrée a été sauvegardée avant le support du retraitement. Déposez à nouveau le PDF.',
     'toast.meeting.title':'Note de Réunion créée','toast.meeting.msg':'Tâche "{name}" envoyée avec succès.','toast.clickup.error':'Erreur ClickUp','toast.push.error':"Erreur d'envoi",'toast.actions.title':"Tâches d'action envoyées",'toast.status.title':'Statut mis à jour','toast.fetchfailed':'Échec du chargement',
+    'app.tagline':'Transformez vos réunions et e-mails en actions',
+    'ref.process':' — Charger PDF → Extraction IA → Envoyer vers votre plateforme',
+    'ref.norriseyes':' — Tableau de bord des tâches en direct',
+    'faq.title':'❓ FAQ',
+    'faq.q1':'Mes données sont-elles en sécurité ?','faq.a1':'Vos clés API et analyses restent dans votre propre navigateur (localStorage). Rien n\'est envoyé à aucun serveur — l\'application est juste un fichier HTML.',
+    'faq.q2':'Verrai-je les mises à jour automatiquement ?','faq.a2':'Oui. L\'application est servie depuis un lien partagé. Lorsqu\'elle est mise à jour, vous obtiendrez la nouvelle version automatiquement à la prochaine ouverture du lien.',
+    'faq.q3':'Si j\'efface le navigateur, je perds tout ?','faq.a3':'Oui — vos identifiants et historique sont stockés localement. Les clés API sont faciles à ressaisir, mais votre historique d\'analyses serait perdu.',
+    'faq.q4':'Puis-je l\'utiliser hors ligne ?','faq.a4':'Non. Une connexion internet est requise pour appeler les fournisseurs IA et les plateformes de destination. L\'application elle-même se charge depuis le lien.',
+    'faq.q5':'Qu\'est-ce que le Tour Guidé ?','faq.a5':'Un guide pas à pas de toutes les fonctionnalités. Vous pouvez le relancer à tout moment depuis la section "Démarrage" ci-dessus.',
+    'welcome.intro':'Bienvenue ! Avant de commencer, choisissez votre langue préférée. Vous pouvez la modifier à tout moment dans les Paramètres.',
+    'welcome.faqhint':'💡 Trouvez des réponses aux questions courantes dans la section FAQ dans les Paramètres.',
+    'welcome.starttour':'▶  Démarrer le Tour Guidé',
+    'welcome.skip':'Passer — Me conduire à l\'application',
   }
 };
 
@@ -4169,13 +4300,42 @@ function initTheme() {
   toggleTheme(isLight);
 }
 
-// Init on load — auto-start tour on very first visit
+// ─── Welcome modal ────────────────────────────────────────────────────────────
+function showWelcomeModal() {
+  // Mark current language as active in welcome lang grid
+  const saved = localStorage.getItem('chuckup_lang') || 'en';
+  document.querySelectorAll('.welcome-lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === saved);
+  });
+  document.getElementById('welcomeModal').style.display = 'flex';
+}
+function closeWelcomeModal() {
+  document.getElementById('welcomeModal').style.display = 'none';
+  localStorage.setItem('chuckup_welcomed', '1');
+}
+function welcomeSetLang(lang) {
+  document.querySelectorAll('.welcome-lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.welcome-lang-btn[data-lang="${lang}"]`)?.classList.add('active');
+  const sel = document.getElementById('lang-select');
+  if (sel) sel.value = lang;
+  switchLanguage(lang);
+}
+function welcomeStartTour() {
+  closeWelcomeModal();
+  setTimeout(() => startTour(), 400);
+}
+function welcomeSkip() {
+  closeWelcomeModal();
+  localStorage.setItem('chuckup_toured', '1');
+}
+
+// Init on load
 document.addEventListener('DOMContentLoaded', () => {
   renderHistory();
   initTheme();
   initLanguage();
-  if (!localStorage.getItem('chuckup_toured')) {
-    setTimeout(() => startTour(), 900);
+  if (!localStorage.getItem('chuckup_welcomed')) {
+    setTimeout(() => showWelcomeModal(), 700);
   }
 });
 
@@ -4906,6 +5066,27 @@ function _tourShow() {
   }, 80));
 }
 </script>
+
+<!-- ═══ WELCOME MODAL ═══ -->
+<div id="welcomeModal" class="welcome-overlay" style="display:none;">
+  <div class="welcome-box" onclick="event.stopPropagation()">
+    <div class="welcome-logo">👊 <span class="welcome-appname">ChuckUp</span> 👊</div>
+    <div class="welcome-tagline" data-i18n="app.tagline">Punch your meetings &amp; emails</div>
+    <p class="welcome-intro" data-i18n="welcome.intro">Welcome! Before you begin, choose your preferred language. You can change it anytime in Settings.</p>
+    <div class="welcome-lang-grid">
+      <button class="welcome-lang-btn" data-lang="en"    onclick="welcomeSetLang('en')">🇬🇧 English</button>
+      <button class="welcome-lang-btn" data-lang="pt-pt" onclick="welcomeSetLang('pt-pt')">🇵🇹 Português (PT)</button>
+      <button class="welcome-lang-btn" data-lang="pt-br" onclick="welcomeSetLang('pt-br')">🇧🇷 Português (BR)</button>
+      <button class="welcome-lang-btn" data-lang="es"   onclick="welcomeSetLang('es')">🇪🇸 Español</button>
+      <button class="welcome-lang-btn" data-lang="fr"   onclick="welcomeSetLang('fr')">🇫🇷 Français</button>
+    </div>
+    <p class="welcome-faq-hint" data-i18n="welcome.faqhint">💡 Find answers to common questions in the <b>FAQ</b> section inside Settings.</p>
+    <div class="welcome-actions">
+      <button class="btn btn-primary welcome-btn" onclick="welcomeStartTour()" data-i18n="welcome.starttour">▶ &nbsp;Start Guided Tour</button>
+      <button class="btn btn-secondary welcome-btn" onclick="welcomeSkip()" data-i18n="welcome.skip">Skip — Take me to the app</button>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ QUOTE MODAL ═══ -->
 <div id="quoteModal" class="quote-modal-overlay" onclick="closeQuoteModal()" style="display:none;">
