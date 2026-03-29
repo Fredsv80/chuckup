@@ -4303,7 +4303,7 @@ function initTheme() {
 // ─── Welcome modal ────────────────────────────────────────────────────────────
 function showWelcomeModal() {
   // Mark current language as active in welcome lang grid
-  const saved = localStorage.getItem('chuckup_lang') || 'en';
+  const saved = localStorage.getItem('cu_lang') || 'en';
   document.querySelectorAll('.welcome-lang-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === saved);
   });
@@ -4318,7 +4318,7 @@ function welcomeSetLang(lang) {
   document.querySelector(`.welcome-lang-btn[data-lang="${lang}"]`)?.classList.add('active');
   const sel = document.getElementById('lang-select');
   if (sel) sel.value = lang;
-  switchLanguage(lang);
+  setLanguage(lang);   // ← correct function name; also persists to localStorage
 }
 function welcomeStartTour() {
   closeWelcomeModal();
