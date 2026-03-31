@@ -2561,7 +2561,7 @@ Remember: ${focusName ? `missing even one of ${focusName}'s tasks is a critical 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system_instruction: { parts: [{ text: sysPrompt }] },
+          systemInstruction: { parts: [{ text: sysPrompt }] },
           contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
           generationConfig: { maxOutputTokens: maxTok },
         }),
