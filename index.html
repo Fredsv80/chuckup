@@ -879,19 +879,19 @@
       border-radius: 8px;
       padding: 12px 16px;
       font-size: 0.83rem;
-      min-width: 280px;
-      max-width: 420px;
-      width: max-content;
+      width: 380px;
+      max-width: calc(100vw - 48px);
       display: flex;
       align-items: flex-start;
       gap: 10px;
       animation: slideIn 0.25s ease;
       box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      box-sizing: border-box;
     }
     .toast-icon { font-size: 1rem; flex-shrink: 0; }
-    .toast-body { flex: 1; min-width: 0; }
+    .toast-body { flex: 1; min-width: 0; overflow: hidden; }
     .toast-title { font-weight: 600; margin-bottom: 2px; }
-    .toast-msg { color: var(--text-muted); font-size: 0.78rem; word-break: break-word; overflow-wrap: anywhere; max-height: 120px; overflow-y: auto; }
+    .toast-msg { color: var(--text-muted); font-size: 0.78rem; word-break: break-all; overflow-wrap: anywhere; max-height: 110px; overflow-y: auto; overflow-x: hidden; }
     .toast.success { border-color: var(--green); }
     .toast.error { border-color: var(--red); }
     .toast.info { border-color: var(--accent); }
