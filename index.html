@@ -2701,18 +2701,32 @@ async function fetchGeminiModels(apiKey) {
     if (!res.ok) return;
     const data = await res.json();
     const models = (data.models || [])
-      .filter(m => m.supportedGenerationMethods?.includes('generateContent') && m.name.includes('gemini'))
+      .filter(m => {
+        const methods = m.supportedGenerationMethods || [];
+        const id = m.name.replace('models/', '');
+        // Only include gemini models that support generateContent; skip tuned/embedding/vision-only
+        return methods.includes('generateContent') && id.startsWith('gemini') && !id.includes('embedding') && !id.includes('aqa');
+      })
       .map(m => ({ id: m.name.replace('models/', ''), label: m.displayName || m.name.replace('models/', '') }))
       .sort((a, b) => {
+        // Stable (non-preview, non-exp) first, then by version desc
+        const stability = id => (id.includes('preview') || id.includes('exp')) ? 1 : 0;
         const score = id => id.includes('2.5') ? 0 : id.includes('2.0') ? 1 : 2;
-        return score(a.id) - score(b.id) || a.id.localeCompare(b.id);
+        return stability(a.id) - stability(b.id) || score(a.id) - score(b.id) || a.id.localeCompare(b.id);
       });
     if (models.length === 0) return;
-    const savedModel = localStorage.getItem('chuckup_model_gemini') || '';
+    // Clear any stale saved model that no longer exists in the list
+    let savedModel = localStorage.getItem('chuckup_model_gemini') || '';
+    if (savedModel && !models.find(m => m.id === savedModel)) {
+      savedModel = '';
+      localStorage.removeItem('chuckup_model_gemini');
+    }
     modelSel.innerHTML = models.map(m => {
-      const isDefault = savedModel ? m.id === savedModel : m.id.includes('2.5-flash') && !m.id.includes('lite');
+      const isDefault = savedModel ? m.id === savedModel : (m.id.includes('2.5-flash') && !m.id.includes('lite') && !m.id.includes('preview') && !m.id.includes('exp'));
       return `<option value="${m.id}"${isDefault ? ' selected' : ''}>${m.label}</option>`;
     }).join('');
+    // If nothing matched as default, select first stable model
+    if (!modelSel.value || modelSel.options[0]) modelSel.options[0].selected = true;
     updateCostEstimate();
   } catch(e) { /* silently keep hardcoded fallback */ }
 }
@@ -4647,6 +4661,11 @@ function dismissFreeSetup() {
 
 // Init on load
 document.addEventListener('DOMContentLoaded', () => {
+  // Clear any stale versioned Gemini model IDs from localStorage
+  const staleModel = localStorage.getItem('chuckup_model_gemini') || '';
+  if (staleModel.includes('preview') || staleModel.includes('exp') || staleModel.includes('-00')) {
+    localStorage.removeItem('chuckup_model_gemini');
+  }
   renderHistory();
   if (localStorage.getItem('chuckup_free_dismissed')) {
     const card = document.getElementById('card-free-setup');
