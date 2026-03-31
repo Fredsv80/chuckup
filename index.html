@@ -4587,6 +4587,15 @@ function welcomeSkip() {
 function welcomeStartFree() {
   closeWelcomeModal();
   localStorage.setItem('chuckup_toured', '1');
+  // Pre-configure Google Gemini + free model
+  const providerSelect = document.getElementById('aiProvider');
+  if (providerSelect) { providerSelect.value = 'gemini'; switchProvider('gemini'); }
+  const modelSelect = document.getElementById('modelSelect');
+  if (modelSelect) {
+    const freeModel = 'gemini-2.5-flash-preview-05-20';
+    modelSelect.value = freeModel;
+    localStorage.setItem('chuckup_model_gemini', freeModel);
+  }
   switchTab('settings');
   setTimeout(() => {
     const card = document.getElementById('card-free-setup');
