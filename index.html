@@ -1763,10 +1763,10 @@ const PROVIDER_CONFIG = {
     keyLink: 'https://aistudio.google.com/app/apikey', keyLinkText: 'aistudio.google.com',
     smartRouting: false,
     models: [
-      { id: 'gemini-2.5-pro-preview-06-05',  label: 'Gemini 2.5 Pro (Best quality)' },
-      { id: 'gemini-2.5-flash-preview-05-20', label: 'Gemini 2.5 Flash (Recommended)', def: true },
-      { id: 'gemini-2.0-flash-001',           label: 'Gemini 2.0 Flash' },
-      { id: 'gemini-2.0-flash-lite-001',      label: 'Gemini 2.0 Flash Lite (Free tier)' },
+      { id: 'gemini-2.5-pro',        label: 'Gemini 2.5 Pro (Best quality)' },
+      { id: 'gemini-2.5-flash',      label: 'Gemini 2.5 Flash (Recommended)', def: true },
+      { id: 'gemini-2.0-flash',      label: 'Gemini 2.0 Flash' },
+      { id: 'gemini-2.0-flash-lite', label: 'Gemini 2.0 Flash Lite (Free tier)' },
     ],
   },
   mistral: {
@@ -1856,10 +1856,10 @@ const MODEL_PRICING = {
   'gpt-4o-mini':  { input: 0.15,  output: 0.60  },
   'gpt-4-turbo':  { input: 10.00, output: 30.00 },
   // Google Gemini
-  'gemini-2.5-pro-preview-06-05':   { input: 1.25,  output: 10.00 },
-  'gemini-2.5-flash-preview-05-20': { input: 0.15,  output: 0.60  },
-  'gemini-2.0-flash-001':           { input: 0.10,  output: 0.40  },
-  'gemini-2.0-flash-lite-001':      { input: 0.075, output: 0.30  },
+  'gemini-2.5-pro':        { input: 1.25,  output: 10.00 },
+  'gemini-2.5-flash':      { input: 0.15,  output: 0.60  },
+  'gemini-2.0-flash':      { input: 0.10,  output: 0.40  },
+  'gemini-2.0-flash-lite': { input: 0.075, output: 0.30  },
   // Mistral
   'mistral-small-latest': { input: 0.20, output: 0.60 },
   'mistral-large-latest': { input: 2.00, output: 6.00 },
@@ -1974,6 +1974,11 @@ function switchProvider(provider) {
     modelSel.innerHTML = cfg.models.map(m =>
       `<option value="${m.id}"${(savedModel ? m.id === savedModel : m.def) ? ' selected' : ''}>${m.label}</option>`
     ).join('');
+    // For Gemini, dynamically load real available models from the API
+    if (provider === 'gemini') {
+      const key = document.getElementById('aiKeyInput')?.value.trim() || localStorage.getItem(cfg.keyStorage) || '';
+      if (key) fetchGeminiModels(key);
+    }
   }
 
   // Update aiProvider select to match
@@ -2130,6 +2135,13 @@ function saveKeys() {
 ['focusName','aiKeyInput','claudeModel'].forEach(id =>
   document.getElementById(id)?.addEventListener('input', saveKeys)
 );
+// When Gemini key is pasted/typed, refresh real model list
+document.getElementById('aiKeyInput')?.addEventListener('blur', () => {
+  if (currentProvider === 'gemini') {
+    const key = document.getElementById('aiKeyInput')?.value.trim();
+    if (key) fetchGeminiModels(key);
+  }
+});
 
 // ─── Quote modal (client-side search, no API cost) ───────────────────────────
 const STOP_WORDS = new Set(['a','an','the','to','for','of','in','on','at','by','with',
@@ -2678,6 +2690,31 @@ Remember: ${focusName ? `missing even one of ${focusName}'s tasks is a critical 
 }
 function cancelAnalysis() {
   if (analysisController) analysisController.abort();
+}
+
+async function fetchGeminiModels(apiKey) {
+  if (!apiKey || currentProvider !== 'gemini') return;
+  const modelSel = document.getElementById('claudeModel');
+  if (!modelSel) return;
+  try {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}&pageSize=100`);
+    if (!res.ok) return;
+    const data = await res.json();
+    const models = (data.models || [])
+      .filter(m => m.supportedGenerationMethods?.includes('generateContent') && m.name.includes('gemini'))
+      .map(m => ({ id: m.name.replace('models/', ''), label: m.displayName || m.name.replace('models/', '') }))
+      .sort((a, b) => {
+        const score = id => id.includes('2.5') ? 0 : id.includes('2.0') ? 1 : 2;
+        return score(a.id) - score(b.id) || a.id.localeCompare(b.id);
+      });
+    if (models.length === 0) return;
+    const savedModel = localStorage.getItem('chuckup_model_gemini') || '';
+    modelSel.innerHTML = models.map(m => {
+      const isDefault = savedModel ? m.id === savedModel : m.id.includes('2.5-flash') && !m.id.includes('lite');
+      return `<option value="${m.id}"${isDefault ? ' selected' : ''}>${m.label}</option>`;
+    }).join('');
+    updateCostEstimate();
+  } catch(e) { /* silently keep hardcoded fallback */ }
 }
 
 // ─── Render results ───────────────────────────────────────────────────────────
@@ -4592,7 +4629,7 @@ function welcomeStartFree() {
   if (providerSelect) { providerSelect.value = 'gemini'; switchProvider('gemini'); }
   const modelSelect = document.getElementById('modelSelect');
   if (modelSelect) {
-    const freeModel = 'gemini-2.5-flash-preview-05-20';
+    const freeModel = 'gemini-2.5-flash';
     modelSelect.value = freeModel;
     localStorage.setItem('chuckup_model_gemini', freeModel);
   }
