@@ -1384,6 +1384,7 @@
         <label class="section-toggle active" data-key="participants"><input type="checkbox" checked /><span class="section-icon">👥</span><span class="section-name" data-i18n="section.participants">Participants</span></label>
         <label class="section-toggle active" data-key="next_steps"><input type="checkbox" checked /><span class="section-icon">🔜</span><span class="section-name" data-i18n="section.next_steps">Next Steps</span></label>
         <label class="section-toggle active" data-key="risks"><input type="checkbox" checked /><span class="section-icon">⚠️</span><span class="section-name" data-i18n="section.risks">Risks & Mitigations</span></label>
+        <label class="section-toggle active" data-key="dependencies"><input type="checkbox" checked /><span class="section-icon">🔗</span><span class="section-name" data-i18n="section.dependencies">Dependencies</span></label>
       </div>
     </div>
 
@@ -2298,6 +2299,7 @@ async function runAnalysis() {
     participants: 'PARTICIPANTS',
     next_steps: 'NEXT_STEPS',
     risks: 'RISKS',
+    dependencies: 'DEPENDENCIES',
   };
 
   const requested = sections.map(s => sectionLabels[s]).join(', ');
@@ -2350,7 +2352,7 @@ DETECT: Set "source_type": "email" if document has From/To/Subject headers, else
 For emails: prefix meeting_title with "Email: ", set duration_estimate to "N/A".
 ${FRED_RULES}
 Return this JSON (only include requested sections):
-{"source_type":"transcription","attachments_detected":[],"meeting_title":"Max 60 chars, concise","meeting_date":"YYYY-MM-DD or Unknown","duration_estimate":"string or N/A","summary":"2-3 sentences","participants":["Name"],"decisions":["..."],"blockers":["..."],"next_steps":["..."],"risks":[{"risk":"...","impact":"high|medium|low","mitigation":"..."}],"action_items":[${ACTION_ITEM_SCHEMA}]}
+{"source_type":"transcription","attachments_detected":[],"meeting_title":"Max 60 chars, concise","meeting_date":"YYYY-MM-DD or Unknown","duration_estimate":"string or N/A","summary":"2-3 sentences","participants":["Name"],"decisions":["..."],"blockers":["..."],"next_steps":["..."],"risks":[{"risk":"...","impact":"high|medium|low","mitigation":"..."}],"dependencies":["..."],"action_items":[${ACTION_ITEM_SCHEMA}]}
 ATTACHMENTS: If any files/images/screenshots mentioned, list in attachments_detected.
 DUE DATES (today ${TODAY}): "ASAP"→today, "EOD"→today 18:00, "this week"→Friday, "next week"→Monday+7. High priority no date→today+1. Medium→today+3. No signal→TBD.
 Only include these sections: ${requested}. Empty sections return [] or "".`;
@@ -2394,6 +2396,7 @@ Respond with exactly this structure (include only requested sections):
     },
     ...
   ],
+  "dependencies": ["Dependency or external blocker that this project/team relies on...", ...],
   "action_items": [
 ${ACTION_ITEM_SCHEMA},
     ...
@@ -2575,6 +2578,7 @@ function renderResults(data, sections) {
     { key: 'blockers',     icon: '🚧', title: 'Blockers',           type: 'list' },
     { key: 'next_steps',   icon: '🔜', title: 'Next Steps',         type: 'list' },
     { key: 'risks',        icon: '⚠️', title: 'Risks & Mitigations', type: 'risks' },
+    { key: 'dependencies', icon: '🔗', title: 'Dependencies',        type: 'list' },
     { key: 'action_items', icon: '✅', title: 'Action Items',       type: 'action_items' },
   ];
 
@@ -2966,6 +2970,7 @@ async function pushMeetingNote() {
     if (extractedData.decisions?.length) sections.push(`## Decisions\n${extractedData.decisions.map(d => `- ${d}`).join('\n')}`);
     if (extractedData.blockers?.length) sections.push(`## Blockers\n${extractedData.blockers.map(b => `- ${b}`).join('\n')}`);
     if (extractedData.next_steps?.length) sections.push(`## Next Steps\n${extractedData.next_steps.map(n => `- ${n}`).join('\n')}`);
+    if (extractedData.dependencies?.length) sections.push(`## Dependencies\n${extractedData.dependencies.map(d => `- ${d}`).join('\n')}`);
     if (extractedData.action_items?.length) {
       const aiLines = extractedData.action_items.map(a =>
         `- [${a.priority?.toUpperCase()||'NORMAL'}] ${a.task} → ${a.assignee||'TBD'} (${a.due_date||'TBD'})`
@@ -3352,6 +3357,11 @@ function _buildExportHtml(forWord) {
     extractedData.next_steps.forEach(n => { html += `<li>${esc2(n)}</li>`; });
     html += `</ul></div>`;
   }
+  if (extractedData.dependencies?.length) {
+    html += `<div class="section"><div class="section-title">🔗 Dependencies</div><ul>`;
+    extractedData.dependencies.forEach(d => { html += `<li>${esc2(d)}</li>`; });
+    html += `</ul></div>`;
+  }
   if (extractedData.risks?.length) {
     html += `<div class="section"><div class="section-title">⚠️ Risks &amp; Mitigations</div>
       <table><thead><tr><th>Risk</th><th>Impact</th><th>Mitigation</th></tr></thead><tbody>`;
@@ -3418,7 +3428,8 @@ function exportAsExcel() {
   if (extractedData.participants?.length) overviewRows.push(['Participants', extractedData.participants.join('\n')]);
   if (extractedData.decisions?.length)    overviewRows.push(['Decisions',    extractedData.decisions.join('\n')]);
   if (extractedData.blockers?.length)     overviewRows.push(['Blockers',     extractedData.blockers.join('\n')]);
-  if (extractedData.next_steps?.length)   overviewRows.push(['Next Steps',   extractedData.next_steps.join('\n')]);
+  if (extractedData.next_steps?.length)    overviewRows.push(['Next Steps',    extractedData.next_steps.join('\n')]);
+  if (extractedData.dependencies?.length)  overviewRows.push(['Dependencies',  extractedData.dependencies.join('\n')]);
   const ws1 = XLSX.utils.aoa_to_sheet(overviewRows);
   setColWidths(ws1, [22, 80]); styleSheet(ws1);
   XLSX.utils.book_append_sheet(wb, ws1, 'Overview');
@@ -3852,7 +3863,7 @@ const TRANSLATIONS = {
     'history.reprocess.title':'Re-run Claude analysis on this document','history.unknown.date':'Unknown date',
     'process.upload.subtitle':'Drop your PDF here','process.upload.hint':'Meeting transcript or email · Detected automatically · Parsed locally in-browser',
     'process.analyse.btn':'🤖 Analyse with AI','process.analyse.hint':'AI will extract the selected sections from your document.',
-    'section.summary':'Summary','section.action_items':'Action Items','section.decisions':'Decisions','section.blockers':'Blockers','section.participants':'Participants','section.next_steps':'Next Steps','section.risks':'Risks & Mitigations',
+    'section.summary':'Summary','section.action_items':'Action Items','section.decisions':'Decisions','section.blockers':'Blockers','section.participants':'Participants','section.next_steps':'Next Steps','section.risks':'Risks & Mitigations','section.dependencies':'Dependencies',
     'settings.norriseyes.title':'👁️ NorrisEyes Dashboard',
     'settings.refresh.1':'Every 1 min','settings.refresh.2':'Every 2 min','settings.refresh.5':'Every 5 min','settings.refresh.10':'Every 10 min','settings.refresh.0':'Manual only',
     'settings.tour.title':'🎓 Getting Started','settings.tour.label':'Guided Tour','settings.tour.hint':'Step-by-step walkthrough of every feature — tabs, AI analysis, NorrisEyes, history and settings. Takes about 2 minutes.','settings.tour.btn':'▶  Start Guided Tour',
@@ -3936,7 +3947,7 @@ const TRANSLATIONS = {
     'history.reprocess.title':'Executar novamente a análise Claude neste documento','history.unknown.date':'Data desconhecida',
     'process.upload.subtitle':'Largue o seu PDF aqui','process.upload.hint':'Transcrição de reunião ou e-mail · Detectado automaticamente · Processado localmente no browser',
     'process.analyse.btn':'🤖 Analisar com IA','process.analyse.hint':'A IA irá extrair as secções seleccionadas do seu documento.',
-    'section.summary':'Sumário','section.action_items':'Tarefas','section.decisions':'Decisões','section.blockers':'Bloqueios','section.participants':'Participantes','section.next_steps':'Próximos Passos','section.risks':'Riscos e Mitigações',
+    'section.summary':'Sumário','section.action_items':'Tarefas','section.decisions':'Decisões','section.blockers':'Bloqueios','section.participants':'Participantes','section.next_steps':'Próximos Passos','section.risks':'Riscos e Mitigações','section.dependencies':'Dependências',
     'settings.norriseyes.title':'👁️ Painel NorrisEyes',
     'settings.refresh.1':'A cada 1 min','settings.refresh.2':'A cada 2 min','settings.refresh.5':'A cada 5 min','settings.refresh.10':'A cada 10 min','settings.refresh.0':'Apenas manual',
     'settings.tour.title':'🎓 Começar','settings.tour.label':'Tour Guiado','settings.tour.hint':'Guia passo a passo de todas as funcionalidades — separadores, análise IA, NorrisEyes, histórico e definições. Demora cerca de 2 minutos.','settings.tour.btn':'▶  Iniciar Tour Guiado',
@@ -4020,7 +4031,7 @@ const TRANSLATIONS = {
     'history.reprocess.title':'Executar novamente a análise Claude neste documento','history.unknown.date':'Data desconhecida',
     'process.upload.subtitle':'Solte seu PDF aqui','process.upload.hint':'Transcrição de reunião ou e-mail · Detectado automaticamente · Processado localmente no navegador',
     'process.analyse.btn':'🤖 Analisar com IA','process.analyse.hint':'A IA irá extrair as seções selecionadas do seu documento.',
-    'section.summary':'Resumo','section.action_items':'Tarefas','section.decisions':'Decisões','section.blockers':'Bloqueios','section.participants':'Participantes','section.next_steps':'Próximos Passos','section.risks':'Riscos e Mitigações',
+    'section.summary':'Resumo','section.action_items':'Tarefas','section.decisions':'Decisões','section.blockers':'Bloqueios','section.participants':'Participantes','section.next_steps':'Próximos Passos','section.risks':'Riscos e Mitigações','section.dependencies':'Dependências',
     'settings.norriseyes.title':'👁️ Painel NorrisEyes',
     'settings.refresh.1':'A cada 1 min','settings.refresh.2':'A cada 2 min','settings.refresh.5':'A cada 5 min','settings.refresh.10':'A cada 10 min','settings.refresh.0':'Somente manual',
     'settings.tour.title':'🎓 Começando','settings.tour.label':'Tour Guiado','settings.tour.hint':'Guia passo a passo de todos os recursos — abas, análise IA, NorrisEyes, histórico e configurações. Leva cerca de 2 minutos.','settings.tour.btn':'▶  Iniciar Tour Guiado',
@@ -4104,7 +4115,7 @@ const TRANSLATIONS = {
     'history.reprocess.title':'Volver a ejecutar el análisis de Claude en este documento','history.unknown.date':'Fecha desconocida',
     'process.upload.subtitle':'Suelta tu PDF aquí','process.upload.hint':'Transcripción de reunión o correo · Detectado automáticamente · Procesado localmente en el navegador',
     'process.analyse.btn':'🤖 Analizar con IA','process.analyse.hint':'La IA extraerá las secciones seleccionadas de tu documento.',
-    'section.summary':'Resumen','section.action_items':'Tareas','section.decisions':'Decisiones','section.blockers':'Bloqueos','section.participants':'Participantes','section.next_steps':'Próximos Pasos','section.risks':'Riesgos y Mitigaciones',
+    'section.summary':'Resumen','section.action_items':'Tareas','section.decisions':'Decisiones','section.blockers':'Bloqueos','section.participants':'Participantes','section.next_steps':'Próximos Pasos','section.risks':'Riesgos y Mitigaciones','section.dependencies':'Dependencias',
     'settings.norriseyes.title':'👁️ Panel NorrisEyes',
     'settings.refresh.1':'Cada 1 min','settings.refresh.2':'Cada 2 min','settings.refresh.5':'Cada 5 min','settings.refresh.10':'Cada 10 min','settings.refresh.0':'Solo manual',
     'settings.tour.title':'🎓 Primeros Pasos','settings.tour.label':'Tour Guiado','settings.tour.hint':'Guía paso a paso de todas las funciones — pestañas, análisis IA, NorrisEyes, historial y configuración. Dura unos 2 minutos.','settings.tour.btn':'▶  Iniciar Tour Guiado',
@@ -4188,7 +4199,7 @@ const TRANSLATIONS = {
     'history.reprocess.title':"Relancer l'analyse Claude sur ce document",'history.unknown.date':'Date inconnue',
     'process.upload.subtitle':'Déposez votre PDF ici','process.upload.hint':'Transcription de réunion ou e-mail · Détecté automatiquement · Traité localement dans le navigateur',
     'process.analyse.btn':'🤖 Analyser avec IA','process.analyse.hint':"L'IA extraira les sections sélectionnées de votre document.",
-    'section.summary':'Résumé','section.action_items':'Tâches','section.decisions':'Décisions','section.blockers':'Blocages','section.participants':'Participants','section.next_steps':'Prochaines Étapes','section.risks':'Risques et Mitigations',
+    'section.summary':'Résumé','section.action_items':'Tâches','section.decisions':'Décisions','section.blockers':'Blocages','section.participants':'Participants','section.next_steps':'Prochaines Étapes','section.risks':'Risques et Mitigations','section.dependencies':'Dépendances',
     'settings.norriseyes.title':'👁️ Tableau de bord NorrisEyes',
     'settings.refresh.1':'Toutes les 1 min','settings.refresh.2':'Toutes les 2 min','settings.refresh.5':'Toutes les 5 min','settings.refresh.10':'Toutes les 10 min','settings.refresh.0':'Manuel uniquement',
     'settings.tour.title':'🎓 Démarrage','settings.tour.label':'Tour Guidé','settings.tour.hint':'Présentation pas à pas de toutes les fonctionnalités — onglets, analyse IA, NorrisEyes, historique et paramètres. Dure environ 2 minutes.','settings.tour.btn':'▶  Démarrer le Tour Guidé',
