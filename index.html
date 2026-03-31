@@ -2556,7 +2556,7 @@ Remember: ${focusName ? `missing even one of ${focusName}'s tasks is a critical 
       raw = data.content?.[0]?.text || '';
 
     } else if (currentProvider === 'gemini') {
-      const endpoint = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`;
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
       res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
