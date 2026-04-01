@@ -5408,7 +5408,7 @@ function _tourShow() {
   // Wait for tab paint
   requestAnimationFrame(() => setTimeout(() => {
     const rawEl  = document.querySelector(step.sel);
-    const noData = !rawEl; // element missing — requires a processed document
+    const noData = !rawEl || rawEl.offsetParent === null; // missing or hidden — requires a processed document
 
     let el = rawEl;
     if (!el || el.offsetParent === null) el = document.getElementById('tab-' + step.tab);
