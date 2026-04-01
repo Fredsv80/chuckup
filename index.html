@@ -1166,7 +1166,7 @@
     .project-toggle { font-size: 0.72rem; color: var(--text-muted); padding: 4px 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
     .project-subtasks { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
     .project-subtasks.open { max-height: 2000px; }
-    .subtask-row { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-top: 1px solid var(--border); font-size: 0.78rem; }
+    .subtask-row { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-top: 1px solid var(--border); font-size: 0.78rem; cursor: pointer; }
     .subtask-row:hover { background: var(--surface2); }
     .subtask-name { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
     .subtask-due { font-size: 0.68rem; padding: 2px 6px; border-radius: 4px; background: rgba(255,71,87,0.1); color: #ff4757; white-space: nowrap; flex-shrink: 0; }
@@ -4990,7 +4990,7 @@ function nkRenderAssignee(){
         const dueCls=dueSt==='overdue'?'':dueSt==='today'?'warn':'ok';
         const bg=nkHexToRgba(cS.color,0.18);
         const parentName=nkGetParentName(ta,taskById);
-        tasksHtml+=`<div class="subtask-row"><span class="status-pill" style="background:${bg};color:${cS.color};border-color:${nkHexToRgba(cS.color,0.4)};font-size:0.58rem" onclick="nkOpenStatusDropdown('${ta.id}',event)" id="nkpill-${ta.id}">${cS.label}</span><span class="subtask-name">${nkEsc(ta.name||'Untitled')}${parentName?`<span class="task-parent"> · ${nkEsc(parentName)}</span>`:''}</span>${dueTxt?`<span class="subtask-due ${dueCls}">${dueTxt}</span>`:''}</div>`;
+        tasksHtml+=`<div class="subtask-row" onclick="nkOpenTask(event,'${ta.url||''}')"><span class="status-pill" style="background:${bg};color:${cS.color};border-color:${nkHexToRgba(cS.color,0.4)};font-size:0.58rem" onclick="nkOpenStatusDropdown('${ta.id}',event)" id="nkpill-${ta.id}">${cS.label}</span><span class="subtask-name">${nkEsc(ta.name||'Untitled')}${parentName?`<span class="task-parent"> · ${nkEsc(parentName)}</span>`:''}</span>${dueTxt?`<span class="subtask-due ${dueCls}">${dueTxt}</span>`:''}</div>`;
       });
     }
 
@@ -5038,7 +5038,7 @@ function nkRenderProjectCard(parent){
       const cDueSt=nkGetDueStatus(cDueMs);
       const dueCls=cDueSt==='overdue'?'':cDueSt==='today'?'warn':'ok';
       const bg=nkHexToRgba(cS.color,0.18);
-      subtasksHtml+=`<div class="subtask-row"><span class="status-pill" style="background:${bg};color:${cS.color};border-color:${nkHexToRgba(cS.color,0.4)};font-size:0.58rem" onclick="nkOpenStatusDropdown('${c.id}',event)" id="nkpill-${c.id}">${cS.label}</span><span class="subtask-name">${nkEsc(c.name||'Untitled')}</span>${cDueTxt?`<span class="subtask-due ${dueCls}">${cDueTxt}</span>`:''}</div>`;
+      subtasksHtml+=`<div class="subtask-row" onclick="nkOpenTask(event,'${c.url||''}')"><span class="status-pill" style="background:${bg};color:${cS.color};border-color:${nkHexToRgba(cS.color,0.4)};font-size:0.58rem" onclick="nkOpenStatusDropdown('${c.id}',event)" id="nkpill-${c.id}">${cS.label}</span><span class="subtask-name">${nkEsc(c.name||'Untitled')}</span>${cDueTxt?`<span class="subtask-due ${dueCls}">${cDueTxt}</span>`:''}</div>`;
     });}
   }
   return`<div class="project-card" id="nkproj-${parent.id}">
