@@ -1407,6 +1407,7 @@
             <option value="asana">🎯 Asana</option>
             <option value="monday">📅 Monday.com</option>
             <option value="jira">🔵 Jira</option>
+            <option value="trello">🟦 Trello</option>
           </select>
         </div>
         <div class="field-group" style="flex:1;">
@@ -1842,6 +1843,14 @@ const PUSH_PROVIDER_CONFIG = {
       { slot: 1, key: 'email',      label: 'Jira Email',      placeholder: 'you@company.com',          type: 'text',     hint: 'Your Atlassian account email',               storage: 'chuckup_push_jira_email'   },
       { slot: 2, key: 'domain',     label: 'Jira Domain',     placeholder: 'mycompany.atlassian.net',  type: 'text',     hint: 'Your Atlassian cloud domain (no https://)',  storage: 'chuckup_push_jira_domain'  },
       { slot: 3, key: 'projectKey', label: 'Project Key',     placeholder: 'ENG',                     type: 'text',     hint: 'Shown in the project URL',                   storage: 'chuckup_push_jira_project' },
+    ],
+  },
+  trello: {
+    name: 'Trello', icon: '🟦',
+    fields: [
+      { slot: 0, key: 'apiKey',  label: 'Trello API Key', placeholder: '…',                type: 'password', hint: 'trello.com/app-key → copy your API Key',       storage: 'chuckup_push_trello_key'    },
+      { slot: 1, key: 'token',   label: 'Trello Token',   placeholder: '…',                type: 'password', hint: 'trello.com/app-key → click "Token" to generate', storage: 'chuckup_push_trello_token'  },
+      { slot: 2, key: 'listId',  label: 'List ID',        placeholder: 'xxxxxxxxxxxxxxxxxxxxxxxx', type: 'text', hint: 'Open your list in Trello → share → the ID in the URL', storage: 'chuckup_push_trello_listid' },
     ],
   },
 };
@@ -3259,6 +3268,25 @@ async function pushMeetingNote() {
       log(`✓ Created Jira issue ${result.key}`, 'ok');
       resultId = result.key;
       toast('success', t('toast.meeting.title'), `Issue ${result.key} created in Jira.`);
+
+    } else if (currentPushProvider === 'trello') {
+      const apiKey = getPushFieldValue('apiKey');
+      const token  = getPushFieldValue('token');
+      const listId = getPushFieldValue('listId');
+      if (!apiKey) throw new Error('Trello API Key is missing.');
+      if (!token)  throw new Error('Trello Token is missing.');
+      if (!listId) throw new Error('Trello List ID is missing.');
+      const url = `https://api.trello.com/1/cards?key=${encodeURIComponent(apiKey)}&token=${encodeURIComponent(token)}`;
+      const result = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idList: listId, name: title, desc: description }),
+      });
+      if (!result.ok) throw new Error(`Trello error: ${result.status} ${result.statusText}`);
+      const card = await result.json();
+      log(`✓ Created Trello card ${card.id}`, 'ok');
+      resultId = card.id;
+      toast('success', t('toast.meeting.title'), `Card created in Trello.`);
     }
 
     setStatus(`<span class="status-dot dot-ok"></span> Meeting note created — ID: <strong>${resultId}</strong>`);
@@ -3385,6 +3413,26 @@ async function pushActionItems(parentId = null) {
           if (parentId) body.fields.parent = { key: parentId };
           const result = await jiraPost(domain, email, token, '/issue', body);
           log(`✓ ${item.task} → ${result.key}`, 'ok');
+          created++;
+        } catch(err) { log(`✗ Failed: ${item.task} — ${err.message}`, 'err'); failed++; }
+      }
+
+    } else if (currentPushProvider === 'trello') {
+      const apiKey = getPushFieldValue('apiKey');
+      const token  = getPushFieldValue('token');
+      const listId = getPushFieldValue('listId');
+      if (!apiKey || !token || !listId) throw new Error('Trello API Key, Token and List ID are required.');
+      const trelloUrl = `https://api.trello.com/1/cards?key=${encodeURIComponent(apiKey)}&token=${encodeURIComponent(token)}`;
+      for (const item of items) {
+        try {
+          const res = await fetch(trelloUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idList: listId, name: item.task, desc: item.notes || '' }),
+          });
+          if (!res.ok) throw new Error(`Trello error: ${res.status}`);
+          const card = await res.json();
+          log(`✓ ${item.task} → card ${card.id}`, 'ok');
           created++;
         } catch(err) { log(`✗ Failed: ${item.task} — ${err.message}`, 'err'); failed++; }
       }
@@ -4109,7 +4157,7 @@ const TRANSLATIONS = {
     'faq.q13':'How do I set up Notion?','faq.a13':'Token: go to <a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a> → New Integration → copy the Internal Integration Secret. Database ID: open your database → Share → Copy link — the 32-char ID before ?v= in the URL. Important: share the database with your integration.',
     'faq.q14':'How do I set up Asana?','faq.a14':'API Key: go to <a href="https://app.asana.com/0/my-apps" target="_blank">app.asana.com/0/my-apps</a> → Create new token. Team ID: open your workspace in Asana → the Team ID is the number in the URL after /team/.',
     'faq.q15':'How do I set up Linear?','faq.a15':'API Key: go to <a href="https://linear.com/settings/api" target="_blank">Linear → Settings → API</a> → Create key. Project ID: open your project in Linear → the ID is in the URL (linear.app/team/project/PROJECT_ID).',
-    'faq.q16':'How do I set up Trello?','faq.a16':'API Key + Token: go to <a href="https://trello.com/app-key" target="_blank">trello.com/app-key</a> — copy API key, click "Token" to generate token. Board ID: open your board → the short code after /b/ in the URL.',
+    'faq.q16':'How do I set up Trello?','faq.a16':'API Key + Token: go to <a href="https://trello.com/app-key" target="_blank">trello.com/app-key</a> — copy API key, click "Token" to generate token. List ID: open your board, click on a list menu (⋯) → copy the link → the ID is the 24-char code in the URL.',
     'faq.q17':'How do I set up Jira?','faq.a17':'API Token: go to <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank">id.atlassian.com → security → api-tokens</a> → Create. Email: your Atlassian account email. Domain: your Jira URL without https:// (e.g. company.atlassian.net). Project Key: the short code next to your project name (e.g. "PROJ").',
   },
   'pt-pt': {
