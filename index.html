@@ -660,6 +660,8 @@
     .faq-item:last-child { border-bottom: none; padding-bottom: 0; }
     .faq-q { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 5px; }
     .faq-a { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
+    .faq-a a { color: var(--accent); text-decoration: none; }
+    .faq-a a:hover { text-decoration: underline; }
     .faq-section-label { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); margin:10px 0 6px; }
     /* Welcome modal */
     .welcome-overlay {
@@ -1546,54 +1548,54 @@
 
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq.q6">Can I use ChuckUp for free?</div>
-          <div class="faq-a" data-i18n="faq.a6">Yes! Use Google Gemini 2.5 Flash — free tier gives up to 1,500 analyses per day, no credit card. Get your key at aistudio.google.com, paste it in the Gemini API Key field, select Gemini 2.5 Flash as model. No push destination needed — you can export to Excel, PDF and Word at zero cost.</div>
+          <div class="faq-a" data-i18n-html="faq.a6"></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq.q7">How do I get a Google Gemini API key?</div>
-          <div class="faq-a" data-i18n="faq.a7">Go to aistudio.google.com → sign in with your Google account → click "Get API Key" → "Create API Key". Free tier: 15 requests/min, 1,500/day. No credit card required.</div>
+          <div class="faq-a" data-i18n-html="faq.a7"></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq.q8">How do I get an Anthropic (Claude) API key?</div>
-          <div class="faq-a" data-i18n="faq.a8">Go to console.anthropic.com → sign in → "API Keys" → "Create Key". Requires a paid account. Recommended model: Claude Sonnet (best quality).</div>
+          <div class="faq-a" data-i18n-html="faq.a8"></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq.q9">How do I get an OpenAI API key?</div>
-          <div class="faq-a" data-i18n="faq.a9">Go to platform.openai.com → sign in → click your profile → "API keys" → "Create new secret key". Requires a paid account with credits.</div>
+          <div class="faq-a" data-i18n-html="faq.a9"></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq.q10">How do I get a Mistral API key?</div>
-          <div class="faq-a" data-i18n="faq.a10">Go to console.mistral.ai → sign in → "API Keys" → "Create new key". Has a free trial tier available.</div>
+          <div class="faq-a" data-i18n-html="faq.a10"></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq.q11">How do I get an OpenRouter API key?</div>
-          <div class="faq-a" data-i18n="faq.a11">Go to openrouter.ai → sign in → "Keys" → "Create Key". OpenRouter has free models available (look for models labelled "free" in the model selector).</div>
+          <div class="faq-a" data-i18n-html="faq.a11"></div>
         </div>
 
         <div class="faq-section-label" data-i18n="faq.section.push">📤 Push Destination Setup</div>
 
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq.q12">How do I set up ClickUp?</div>
-          <div class="faq-a" data-i18n="faq.a12">API Token: in ClickUp go to Settings (bottom-left avatar) → Apps → API Token → Copy. List ID: open your target list in ClickUp and look at the URL — the number after /list/ is your List ID (e.g. …/list/901234567890).</div>
+          <div class="faq-a" data-i18n-html="faq.a12"></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq.q13">How do I set up Notion?</div>
-          <div class="faq-a" data-i18n="faq.a13">Integration Token: go to notion.so/my-integrations → New Integration → copy the "Internal Integration Secret". Database ID: open your Notion database, click Share → Copy link — the 32-character ID before "?v=" in the URL is your Database ID. Important: share the database with your integration first.</div>
+          <div class="faq-a" data-i18n-html="faq.a13"></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq.q14">How do I set up Asana?</div>
-          <div class="faq-a" data-i18n="faq.a14">API Key: go to app.asana.com/0/my-apps → "Create new token" → copy it. Team ID: in Asana, open your workspace and navigate to the team — the Team ID is the number in the URL after /team/.</div>
+          <div class="faq-a" data-i18n-html="faq.a14"></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq.q15">How do I set up Linear?</div>
-          <div class="faq-a" data-i18n="faq.a15">API Key: in Linear go to Settings → API → "Create key" → copy it. Project ID: open your project in Linear — the Project ID is visible in the URL (e.g. linear.app/team/project/PROJECT_ID).</div>
+          <div class="faq-a" data-i18n-html="faq.a15"></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq.q16">How do I set up Trello?</div>
-          <div class="faq-a" data-i18n="faq.a16">API Key + Token: go to trello.com/app-key — copy your API key, then click "Token" to generate your token. Board ID: open your Trello board — the Board ID is the short code in the URL after /b/ (e.g. trello.com/b/BOARD_ID/board-name).</div>
+          <div class="faq-a" data-i18n-html="faq.a16"></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq.q17">How do I set up Jira?</div>
-          <div class="faq-a" data-i18n="faq.a17">API Token: go to id.atlassian.com/manage-profile/security/api-tokens → "Create API token" → copy it. Email: your Atlassian account email. Domain: your Jira URL without https:// (e.g. yourcompany.atlassian.net). Project Key: the short code shown next to your project name in Jira (e.g. "PROJ").</div>
+          <div class="faq-a" data-i18n-html="faq.a17"></div>
         </div>
       </div>
     </div>
@@ -4097,18 +4099,18 @@ const TRANSLATIONS = {
     'freesetup.step3.body':'No push destination needed. After analysis, use Export as Excel / PDF / Word — all free, all local, no accounts required.',
     'faq.section.aikeys':'🤖 AI Provider API Keys',
     'faq.section.push':'📤 Push Destination Setup',
-    'faq.q6':'Can I use ChuckUp for free?','faq.a6':'Yes! Use Google Gemini 2.5 Flash — free tier gives up to 1,500 analyses/day, no credit card. Go to aistudio.google.com → Get API Key → paste it in the Gemini API Key field → select Gemini 2.5 Flash as model. No push destination needed — export to Excel, PDF and Word at zero cost.',
-    'faq.q7':'How do I get a Google Gemini API key?','faq.a7':'Go to aistudio.google.com → sign in with Google → click "Get API Key" → Create API Key. Free tier: 15 req/min, 1,500/day. No credit card required.',
-    'faq.q8':'How do I get an Anthropic (Claude) API key?','faq.a8':'Go to console.anthropic.com → sign in → "API Keys" → "Create Key". Requires a paid account. Recommended model: Claude Sonnet (best quality).',
-    'faq.q9':'How do I get an OpenAI API key?','faq.a9':'Go to platform.openai.com → sign in → profile → "API keys" → "Create new secret key". Requires a paid account with credits.',
-    'faq.q10':'How do I get a Mistral API key?','faq.a10':'Go to console.mistral.ai → sign in → "API Keys" → "Create new key". Has a free trial tier.',
-    'faq.q11':'How do I get an OpenRouter API key?','faq.a11':'Go to openrouter.ai → sign in → "Keys" → "Create Key". Has free models available (look for models labelled "free").',
-    'faq.q12':'How do I set up ClickUp?','faq.a12':'Token: ClickUp → Settings (bottom-left avatar) → Apps → API Token → Copy. List ID: open your target list in ClickUp and look at the URL — the number after /list/ is your List ID.',
-    'faq.q13':'How do I set up Notion?','faq.a13':'Token: notion.so/my-integrations → New Integration → copy the Internal Integration Secret. Database ID: open your database → Share → Copy link — the 32-char ID before ?v= in the URL. Important: share the database with your integration.',
-    'faq.q14':'How do I set up Asana?','faq.a14':'API Key: app.asana.com/0/my-apps → Create new token. Team ID: open your workspace in Asana → the Team ID is the number in the URL after /team/.',
-    'faq.q15':'How do I set up Linear?','faq.a15':'API Key: Linear → Settings → API → Create key. Project ID: open your project in Linear → the ID is in the URL (linear.app/team/project/PROJECT_ID).',
-    'faq.q16':'How do I set up Trello?','faq.a16':'API Key + Token: trello.com/app-key — copy API key, click "Token" to generate token. Board ID: open your board → the short code after /b/ in the URL.',
-    'faq.q17':'How do I set up Jira?','faq.a17':'API Token: id.atlassian.com/manage-profile/security/api-tokens → Create. Email: your Atlassian account email. Domain: your Jira URL without https:// (e.g. company.atlassian.net). Project Key: the short code next to your project name (e.g. "PROJ").',
+    'faq.q6':'Can I use ChuckUp for free?','faq.a6':'Yes! Use Google Gemini 2.5 Flash — free tier gives up to 1,500 analyses/day, no credit card. Go to <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → paste it in the Gemini API Key field → select Gemini 2.5 Flash as model. No push destination needed — export to Excel, PDF and Word at zero cost.',
+    'faq.q7':'How do I get a Google Gemini API key?','faq.a7':'Go to <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → sign in with Google → click "Get API Key" → Create API Key. Free tier: 15 req/min, 1,500/day. No credit card required.',
+    'faq.q8':'How do I get an Anthropic (Claude) API key?','faq.a8':'Go to <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → sign in → "API Keys" → "Create Key". Requires a paid account. Recommended model: Claude Sonnet (best quality).',
+    'faq.q9':'How do I get an OpenAI API key?','faq.a9':'Go to <a href="https://platform.openai.com" target="_blank">platform.openai.com</a> → sign in → profile → "API keys" → "Create new secret key". Requires a paid account with credits.',
+    'faq.q10':'How do I get a Mistral API key?','faq.a10':'Go to <a href="https://console.mistral.ai" target="_blank">console.mistral.ai</a> → sign in → "API Keys" → "Create new key". Has a free trial tier.',
+    'faq.q11':'How do I get an OpenRouter API key?','faq.a11':'Go to <a href="https://openrouter.ai" target="_blank">openrouter.ai</a> → sign in → "Keys" → "Create Key". Has free models available (look for models labelled "free").',
+    'faq.q12':'How do I set up ClickUp?','faq.a12':'Token: go to <a href="https://app.clickup.com/settings/apps" target="_blank">ClickUp → Settings → Apps → API Token</a> → Copy. List ID: open your target list in ClickUp and look at the URL — the number after /list/ is your List ID.',
+    'faq.q13':'How do I set up Notion?','faq.a13':'Token: go to <a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a> → New Integration → copy the Internal Integration Secret. Database ID: open your database → Share → Copy link — the 32-char ID before ?v= in the URL. Important: share the database with your integration.',
+    'faq.q14':'How do I set up Asana?','faq.a14':'API Key: go to <a href="https://app.asana.com/0/my-apps" target="_blank">app.asana.com/0/my-apps</a> → Create new token. Team ID: open your workspace in Asana → the Team ID is the number in the URL after /team/.',
+    'faq.q15':'How do I set up Linear?','faq.a15':'API Key: go to <a href="https://linear.com/settings/api" target="_blank">Linear → Settings → API</a> → Create key. Project ID: open your project in Linear → the ID is in the URL (linear.app/team/project/PROJECT_ID).',
+    'faq.q16':'How do I set up Trello?','faq.a16':'API Key + Token: go to <a href="https://trello.com/app-key" target="_blank">trello.com/app-key</a> — copy API key, click "Token" to generate token. Board ID: open your board → the short code after /b/ in the URL.',
+    'faq.q17':'How do I set up Jira?','faq.a17':'API Token: go to <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank">id.atlassian.com → security → api-tokens</a> → Create. Email: your Atlassian account email. Domain: your Jira URL without https:// (e.g. company.atlassian.net). Project Key: the short code next to your project name (e.g. "PROJ").',
   },
   'pt-pt': {
     'tab.process':'⚡ Processar ⚡','tab.history':'📚 Histórico 📚','tab.costcontrol':'💰 Controlo de Custos 💰','tab.settings':'⚙️ Definições ⚙️',
@@ -4205,18 +4207,18 @@ const TRANSLATIONS = {
     'freesetup.step3.body':'Sem destino de envio necessário. Após a análise, exporte para Excel / PDF / Word — tudo gratuito, tudo local.',
     'faq.section.aikeys':'🤖 Chaves API dos Fornecedores de IA',
     'faq.section.push':'📤 Configuração do Destino de Envio',
-    'faq.q6':'Posso usar o ChuckUp gratuitamente?','faq.a6':'Sim! Use o Google Gemini 2.5 Flash — nível gratuito permite até 1.500 análises/dia, sem cartão de crédito. Aceda a aistudio.google.com → Get API Key → cole no campo Gemini API Key → seleccione Gemini 2.5 Flash. Sem destino de envio necessário — exporte para Excel, PDF e Word sem custos.',
-    'faq.q7':'Como obtenho uma chave API do Google Gemini?','faq.a7':'Aceda a aistudio.google.com → inicie sessão com Google → clique em "Get API Key" → Create API Key. Nível gratuito: 15 pedidos/min, 1.500/dia. Sem cartão de crédito.',
-    'faq.q8':'Como obtenho uma chave API da Anthropic (Claude)?','faq.a8':'Aceda a console.anthropic.com → inicie sessão → "API Keys" → "Create Key". Requer conta paga. Modelo recomendado: Claude Sonnet.',
-    'faq.q9':'Como obtenho uma chave API da OpenAI?','faq.a9':'Aceda a platform.openai.com → inicie sessão → perfil → "API keys" → "Create new secret key". Requer conta paga com créditos.',
-    'faq.q10':'Como obtenho uma chave API da Mistral?','faq.a10':'Aceda a console.mistral.ai → inicie sessão → "API Keys" → "Create new key". Tem nível de avaliação gratuito.',
-    'faq.q11':'Como obtenho uma chave API do OpenRouter?','faq.a11':'Aceda a openrouter.ai → inicie sessão → "Keys" → "Create Key". Tem modelos gratuitos disponíveis.',
-    'faq.q12':'Como configuro o ClickUp?','faq.a12':'Token: ClickUp → Definições (avatar canto inferior esquerdo) → Apps → API Token → Copiar. List ID: abra a lista no ClickUp e veja o URL — o número após /list/ é o seu List ID.',
-    'faq.q13':'Como configuro o Notion?','faq.a13':'Token: notion.so/my-integrations → New Integration → copie o Internal Integration Secret. Database ID: abra a base de dados → Share → Copy link — o ID de 32 caracteres antes de ?v= no URL. Importante: partilhe a base de dados com a integração.',
-    'faq.q14':'Como configuro o Asana?','faq.a14':'API Key: app.asana.com/0/my-apps → Create new token. Team ID: abra o workspace no Asana → o Team ID é o número no URL após /team/.',
-    'faq.q15':'Como configuro o Linear?','faq.a15':'API Key: Linear → Definições → API → Create key. Project ID: abra o projecto no Linear → o ID está no URL.',
-    'faq.q16':'Como configuro o Trello?','faq.a16':'API Key + Token: trello.com/app-key — copie a API key, clique em "Token" para gerar o token. Board ID: abra o quadro → o código curto após /b/ no URL.',
-    'faq.q17':'Como configuro o Jira?','faq.a17':'API Token: id.atlassian.com/manage-profile/security/api-tokens → Create. Email: o seu email Atlassian. Domínio: o URL do Jira sem https:// (ex: empresa.atlassian.net). Project Key: o código curto junto ao nome do projecto (ex: "PROJ").',
+    'faq.q6':'Posso usar o ChuckUp gratuitamente?','faq.a6':'Sim! Use o Google Gemini 2.5 Flash — nível gratuito permite até 1.500 análises/dia, sem cartão de crédito. Aceda a <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → cole no campo Gemini API Key → seleccione Gemini 2.5 Flash. Sem destino de envio necessário — exporte para Excel, PDF e Word sem custos.',
+    'faq.q7':'Como obtenho uma chave API do Google Gemini?','faq.a7':'Aceda a <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → inicie sessão com Google → clique em "Get API Key" → Create API Key. Nível gratuito: 15 pedidos/min, 1.500/dia. Sem cartão de crédito.',
+    'faq.q8':'Como obtenho uma chave API da Anthropic (Claude)?','faq.a8':'Aceda a <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → inicie sessão → "API Keys" → "Create Key". Requer conta paga. Modelo recomendado: Claude Sonnet.',
+    'faq.q9':'Como obtenho uma chave API da OpenAI?','faq.a9':'Aceda a <a href="https://platform.openai.com" target="_blank">platform.openai.com</a> → inicie sessão → perfil → "API keys" → "Create new secret key". Requer conta paga com créditos.',
+    'faq.q10':'Como obtenho uma chave API da Mistral?','faq.a10':'Aceda a <a href="https://console.mistral.ai" target="_blank">console.mistral.ai</a> → inicie sessão → "API Keys" → "Create new key". Tem nível de avaliação gratuito.',
+    'faq.q11':'Como obtenho uma chave API do OpenRouter?','faq.a11':'Aceda a <a href="https://openrouter.ai" target="_blank">openrouter.ai</a> → inicie sessão → "Keys" → "Create Key". Tem modelos gratuitos disponíveis.',
+    'faq.q12':'Como configuro o ClickUp?','faq.a12':'Token: aceda a <a href="https://app.clickup.com/settings/apps" target="_blank">ClickUp → Definições → Apps → API Token</a> → Copiar. List ID: abra a lista no ClickUp e veja o URL — o número após /list/ é o seu List ID.',
+    'faq.q13':'Como configuro o Notion?','faq.a13':'Token: aceda a <a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a> → New Integration → copie o Internal Integration Secret. Database ID: abra a base de dados → Share → Copy link — o ID de 32 caracteres antes de ?v= no URL. Importante: partilhe a base de dados com a integração.',
+    'faq.q14':'Como configuro o Asana?','faq.a14':'API Key: aceda a <a href="https://app.asana.com/0/my-apps" target="_blank">app.asana.com/0/my-apps</a> → Create new token. Team ID: abra o workspace no Asana → o Team ID é o número no URL após /team/.',
+    'faq.q15':'Como configuro o Linear?','faq.a15':'API Key: aceda a <a href="https://linear.com/settings/api" target="_blank">Linear → Definições → API</a> → Create key. Project ID: abra o projecto no Linear → o ID está no URL.',
+    'faq.q16':'Como configuro o Trello?','faq.a16':'API Key + Token: aceda a <a href="https://trello.com/app-key" target="_blank">trello.com/app-key</a> — copie a API key, clique em "Token" para gerar o token. Board ID: abra o quadro → o código curto após /b/ no URL.',
+    'faq.q17':'Como configuro o Jira?','faq.a17':'API Token: aceda a <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank">id.atlassian.com → security → api-tokens</a> → Create. Email: o seu email Atlassian. Domínio: o URL do Jira sem https:// (ex: empresa.atlassian.net). Project Key: o código curto junto ao nome do projecto (ex: "PROJ").',
   },
   'pt-br': {
     'tab.process':'⚡ Processar ⚡','tab.history':'📚 Histórico 📚','tab.costcontrol':'💰 Controle de Custos 💰','tab.settings':'⚙️ Configurações ⚙️',
@@ -4313,18 +4315,18 @@ const TRANSLATIONS = {
     'freesetup.step3.body':'Sem destino de envio necessário. Após a análise, exporte para Excel / PDF / Word — tudo gratuito, tudo local.',
     'faq.section.aikeys':'🤖 Chaves API dos Provedores de IA',
     'faq.section.push':'📤 Configuração do Destino de Envio',
-    'faq.q6':'Posso usar o ChuckUp de graça?','faq.a6':'Sim! Use o Google Gemini 2.5 Flash — nível gratuito permite até 1.500 análises/dia, sem cartão de crédito. Acesse aistudio.google.com → Get API Key → cole no campo Gemini API Key → selecione Gemini 2.5 Flash. Sem destino de envio necessário — exporte para Excel, PDF e Word sem custos.',
-    'faq.q7':'Como obtenho uma chave API do Google Gemini?','faq.a7':'Acesse aistudio.google.com → entre com o Google → clique em "Get API Key" → Create API Key. Nível gratuito: 15 req/min, 1.500/dia. Sem cartão de crédito.',
-    'faq.q8':'Como obtenho uma chave API da Anthropic (Claude)?','faq.a8':'Acesse console.anthropic.com → entre → "API Keys" → "Create Key". Requer conta paga. Modelo recomendado: Claude Sonnet.',
-    'faq.q9':'Como obtenho uma chave API da OpenAI?','faq.a9':'Acesse platform.openai.com → entre → perfil → "API keys" → "Create new secret key". Requer conta paga com créditos.',
-    'faq.q10':'Como obtenho uma chave API da Mistral?','faq.a10':'Acesse console.mistral.ai → entre → "API Keys" → "Create new key". Tem nível de avaliação gratuito.',
-    'faq.q11':'Como obtenho uma chave API do OpenRouter?','faq.a11':'Acesse openrouter.ai → entre → "Keys" → "Create Key". Tem modelos gratuitos disponíveis.',
-    'faq.q12':'Como configuro o ClickUp?','faq.a12':'Token: ClickUp → Configurações (avatar canto inferior esquerdo) → Apps → API Token → Copiar. List ID: abra a lista no ClickUp e veja a URL — o número após /list/ é o seu List ID.',
-    'faq.q13':'Como configuro o Notion?','faq.a13':'Token: notion.so/my-integrations → New Integration → copie o Internal Integration Secret. Database ID: abra o banco de dados → Share → Copy link — o ID de 32 caracteres antes de ?v= na URL. Importante: compartilhe o banco de dados com a integração.',
-    'faq.q14':'Como configuro o Asana?','faq.a14':'API Key: app.asana.com/0/my-apps → Create new token. Team ID: abra o workspace no Asana → o Team ID é o número na URL após /team/.',
-    'faq.q15':'Como configuro o Linear?','faq.a15':'API Key: Linear → Configurações → API → Create key. Project ID: abra o projeto no Linear → o ID está na URL.',
-    'faq.q16':'Como configuro o Trello?','faq.a16':'API Key + Token: trello.com/app-key — copie a API key, clique em "Token" para gerar o token. Board ID: abra o quadro → o código curto após /b/ na URL.',
-    'faq.q17':'Como configuro o Jira?','faq.a17':'API Token: id.atlassian.com/manage-profile/security/api-tokens → Create. Email: seu email Atlassian. Domínio: a URL do Jira sem https:// (ex: empresa.atlassian.net). Project Key: o código curto ao lado do nome do projeto (ex: "PROJ").',
+    'faq.q6':'Posso usar o ChuckUp de graça?','faq.a6':'Sim! Use o Google Gemini 2.5 Flash — nível gratuito permite até 1.500 análises/dia, sem cartão de crédito. Acesse <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → cole no campo Gemini API Key → selecione Gemini 2.5 Flash. Sem destino de envio necessário — exporte para Excel, PDF e Word sem custos.',
+    'faq.q7':'Como obtenho uma chave API do Google Gemini?','faq.a7':'Acesse <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → entre com o Google → clique em "Get API Key" → Create API Key. Nível gratuito: 15 req/min, 1.500/dia. Sem cartão de crédito.',
+    'faq.q8':'Como obtenho uma chave API da Anthropic (Claude)?','faq.a8':'Acesse <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → entre → "API Keys" → "Create Key". Requer conta paga. Modelo recomendado: Claude Sonnet.',
+    'faq.q9':'Como obtenho uma chave API da OpenAI?','faq.a9':'Acesse <a href="https://platform.openai.com" target="_blank">platform.openai.com</a> → entre → perfil → "API keys" → "Create new secret key". Requer conta paga com créditos.',
+    'faq.q10':'Como obtenho uma chave API da Mistral?','faq.a10':'Acesse <a href="https://console.mistral.ai" target="_blank">console.mistral.ai</a> → entre → "API Keys" → "Create new key". Tem nível de avaliação gratuito.',
+    'faq.q11':'Como obtenho uma chave API do OpenRouter?','faq.a11':'Acesse <a href="https://openrouter.ai" target="_blank">openrouter.ai</a> → entre → "Keys" → "Create Key". Tem modelos gratuitos disponíveis.',
+    'faq.q12':'Como configuro o ClickUp?','faq.a12':'Token: acesse <a href="https://app.clickup.com/settings/apps" target="_blank">ClickUp → Configurações → Apps → API Token</a> → Copiar. List ID: abra a lista no ClickUp e veja a URL — o número após /list/ é o seu List ID.',
+    'faq.q13':'Como configuro o Notion?','faq.a13':'Token: acesse <a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a> → New Integration → copie o Internal Integration Secret. Database ID: abra o banco de dados → Share → Copy link — o ID de 32 caracteres antes de ?v= na URL. Importante: compartilhe o banco de dados com a integração.',
+    'faq.q14':'Como configuro o Asana?','faq.a14':'API Key: acesse <a href="https://app.asana.com/0/my-apps" target="_blank">app.asana.com/0/my-apps</a> → Create new token. Team ID: abra o workspace no Asana → o Team ID é o número na URL após /team/.',
+    'faq.q15':'Como configuro o Linear?','faq.a15':'API Key: acesse <a href="https://linear.com/settings/api" target="_blank">Linear → Configurações → API</a> → Create key. Project ID: abra o projeto no Linear → o ID está na URL.',
+    'faq.q16':'Como configuro o Trello?','faq.a16':'API Key + Token: acesse <a href="https://trello.com/app-key" target="_blank">trello.com/app-key</a> — copie a API key, clique em "Token" para gerar o token. Board ID: abra o quadro → o código curto após /b/ na URL.',
+    'faq.q17':'Como configuro o Jira?','faq.a17':'API Token: acesse <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank">id.atlassian.com → security → api-tokens</a> → Create. Email: seu email Atlassian. Domínio: a URL do Jira sem https:// (ex: empresa.atlassian.net). Project Key: o código curto ao lado do nome do projeto (ex: "PROJ").',
   },
   es: {
     'tab.process':'⚡ Procesar ⚡','tab.history':'📚 Historial 📚','tab.costcontrol':'💰 Control de Costos 💰','tab.settings':'⚙️ Configuración ⚙️',
@@ -4421,18 +4423,18 @@ const TRANSLATIONS = {
     'freesetup.step3.body':'Sin destino de envío necesario. Tras el análisis, exporta a Excel / PDF / Word — todo gratis, todo local.',
     'faq.section.aikeys':'🤖 Claves API de Proveedores de IA',
     'faq.section.push':'📤 Configuración del Destino de Envío',
-    'faq.q6':'¿Puedo usar ChuckUp gratis?','faq.a6':'Sí! Usa Google Gemini 2.5 Flash — el nivel gratuito permite hasta 1.500 análisis/día, sin tarjeta de crédito. Ve a aistudio.google.com → Get API Key → pégala en el campo Gemini API Key → selecciona Gemini 2.5 Flash. Sin destino de envío — exporta a Excel, PDF y Word sin costes.',
-    'faq.q7':'¿Cómo obtengo una clave API de Google Gemini?','faq.a7':'Ve a aistudio.google.com → inicia sesión con Google → "Get API Key" → Create API Key. Nivel gratuito: 15 req/min, 1.500/día. Sin tarjeta de crédito.',
-    'faq.q8':'¿Cómo obtengo una clave API de Anthropic (Claude)?','faq.a8':'Ve a console.anthropic.com → inicia sesión → "API Keys" → "Create Key". Requiere cuenta de pago. Modelo recomendado: Claude Sonnet.',
-    'faq.q9':'¿Cómo obtengo una clave API de OpenAI?','faq.a9':'Ve a platform.openai.com → inicia sesión → perfil → "API keys" → "Create new secret key". Requiere cuenta de pago con créditos.',
-    'faq.q10':'¿Cómo obtengo una clave API de Mistral?','faq.a10':'Ve a console.mistral.ai → inicia sesión → "API Keys" → "Create new key". Tiene nivel de prueba gratuito.',
-    'faq.q11':'¿Cómo obtengo una clave API de OpenRouter?','faq.a11':'Ve a openrouter.ai → inicia sesión → "Keys" → "Create Key". Tiene modelos gratuitos disponibles.',
-    'faq.q12':'¿Cómo configuro ClickUp?','faq.a12':'Token: ClickUp → Configuración (avatar abajo izquierda) → Apps → API Token → Copiar. List ID: abre la lista en ClickUp y mira la URL — el número tras /list/ es tu List ID.',
-    'faq.q13':'¿Cómo configuro Notion?','faq.a13':'Token: notion.so/my-integrations → New Integration → copia el Internal Integration Secret. Database ID: abre tu base de datos → Share → Copy link — el ID de 32 caracteres antes de ?v= en la URL. Importante: comparte la base de datos con tu integración.',
-    'faq.q14':'¿Cómo configuro Asana?','faq.a14':'API Key: app.asana.com/0/my-apps → Create new token. Team ID: abre el workspace en Asana → el Team ID es el número en la URL tras /team/.',
-    'faq.q15':'¿Cómo configuro Linear?','faq.a15':'API Key: Linear → Configuración → API → Create key. Project ID: abre tu proyecto en Linear → el ID está en la URL.',
-    'faq.q16':'¿Cómo configuro Trello?','faq.a16':'API Key + Token: trello.com/app-key — copia la API key, haz clic en "Token" para generar el token. Board ID: abre tu tablero → el código corto tras /b/ en la URL.',
-    'faq.q17':'¿Cómo configuro Jira?','faq.a17':'API Token: id.atlassian.com/manage-profile/security/api-tokens → Create. Email: tu email Atlassian. Dominio: la URL de Jira sin https:// (ej: empresa.atlassian.net). Project Key: el código corto junto al nombre del proyecto (ej: "PROJ").',
+    'faq.q6':'¿Puedo usar ChuckUp gratis?','faq.a6':'¡Sí! Usa Google Gemini 2.5 Flash — el nivel gratuito permite hasta 1.500 análisis/día, sin tarjeta de crédito. Ve a <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → pégala en el campo Gemini API Key → selecciona Gemini 2.5 Flash. Sin destino de envío — exporta a Excel, PDF y Word sin costes.',
+    'faq.q7':'¿Cómo obtengo una clave API de Google Gemini?','faq.a7':'Ve a <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → inicia sesión con Google → "Get API Key" → Create API Key. Nivel gratuito: 15 req/min, 1.500/día. Sin tarjeta de crédito.',
+    'faq.q8':'¿Cómo obtengo una clave API de Anthropic (Claude)?','faq.a8':'Ve a <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → inicia sesión → "API Keys" → "Create Key". Requiere cuenta de pago. Modelo recomendado: Claude Sonnet.',
+    'faq.q9':'¿Cómo obtengo una clave API de OpenAI?','faq.a9':'Ve a <a href="https://platform.openai.com" target="_blank">platform.openai.com</a> → inicia sesión → perfil → "API keys" → "Create new secret key". Requiere cuenta de pago con créditos.',
+    'faq.q10':'¿Cómo obtengo una clave API de Mistral?','faq.a10':'Ve a <a href="https://console.mistral.ai" target="_blank">console.mistral.ai</a> → inicia sesión → "API Keys" → "Create new key". Tiene nivel de prueba gratuito.',
+    'faq.q11':'¿Cómo obtengo una clave API de OpenRouter?','faq.a11':'Ve a <a href="https://openrouter.ai" target="_blank">openrouter.ai</a> → inicia sesión → "Keys" → "Create Key". Tiene modelos gratuitos disponibles.',
+    'faq.q12':'¿Cómo configuro ClickUp?','faq.a12':'Token: ve a <a href="https://app.clickup.com/settings/apps" target="_blank">ClickUp → Configuración → Apps → API Token</a> → Copiar. List ID: abre la lista en ClickUp y mira la URL — el número tras /list/ es tu List ID.',
+    'faq.q13':'¿Cómo configuro Notion?','faq.a13':'Token: ve a <a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a> → New Integration → copia el Internal Integration Secret. Database ID: abre tu base de datos → Share → Copy link — el ID de 32 caracteres antes de ?v= en la URL. Importante: comparte la base de datos con tu integración.',
+    'faq.q14':'¿Cómo configuro Asana?','faq.a14':'API Key: ve a <a href="https://app.asana.com/0/my-apps" target="_blank">app.asana.com/0/my-apps</a> → Create new token. Team ID: abre el workspace en Asana → el Team ID es el número en la URL tras /team/.',
+    'faq.q15':'¿Cómo configuro Linear?','faq.a15':'API Key: ve a <a href="https://linear.com/settings/api" target="_blank">Linear → Configuración → API</a> → Create key. Project ID: abre tu proyecto en Linear → el ID está en la URL.',
+    'faq.q16':'¿Cómo configuro Trello?','faq.a16':'API Key + Token: ve a <a href="https://trello.com/app-key" target="_blank">trello.com/app-key</a> — copia la API key, haz clic en "Token" para generar el token. Board ID: abre tu tablero → el código corto tras /b/ en la URL.',
+    'faq.q17':'¿Cómo configuro Jira?','faq.a17':'API Token: ve a <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank">id.atlassian.com → security → api-tokens</a> → Create. Email: tu email Atlassian. Dominio: la URL de Jira sin https:// (ej: empresa.atlassian.net). Project Key: el código corto junto al nombre del proyecto (ej: "PROJ").',
   },
   fr: {
     'tab.process':'⚡ Traiter ⚡','tab.history':'📚 Historique 📚','tab.costcontrol':'💰 Contrôle des Coûts 💰','tab.settings':'⚙️ Paramètres ⚙️',
@@ -4529,18 +4531,18 @@ const TRANSLATIONS = {
     'freesetup.step3.body':'Aucune destination d\'envoi nécessaire. Après l\'analyse, exportez en Excel / PDF / Word — tout gratuit, tout local.',
     'faq.section.aikeys':'🤖 Clés API des Fournisseurs IA',
     'faq.section.push':'📤 Configuration de la Destination d\'Envoi',
-    'faq.q6':'Puis-je utiliser ChuckUp gratuitement ?','faq.a6':'Oui ! Utilisez Google Gemini 2.5 Flash — niveau gratuit : jusqu\'à 1 500 analyses/jour, sans carte bancaire. Allez sur aistudio.google.com → Get API Key → collez dans le champ Gemini API Key → sélectionnez Gemini 2.5 Flash. Sans destination d\'envoi — exportez en Excel, PDF et Word sans frais.',
-    'faq.q7':'Comment obtenir une clé API Google Gemini ?','faq.a7':'Allez sur aistudio.google.com → connectez-vous avec Google → cliquez sur "Get API Key" → Create API Key. Niveau gratuit : 15 req/min, 1 500/jour. Sans carte bancaire.',
-    'faq.q8':'Comment obtenir une clé API Anthropic (Claude) ?','faq.a8':'Allez sur console.anthropic.com → connectez-vous → "API Keys" → "Create Key". Nécessite un compte payant. Modèle recommandé : Claude Sonnet.',
-    'faq.q9':'Comment obtenir une clé API OpenAI ?','faq.a9':'Allez sur platform.openai.com → connectez-vous → profil → "API keys" → "Create new secret key". Nécessite un compte payant avec des crédits.',
-    'faq.q10':'Comment obtenir une clé API Mistral ?','faq.a10':'Allez sur console.mistral.ai → connectez-vous → "API Keys" → "Create new key". Niveau d\'essai gratuit disponible.',
-    'faq.q11':'Comment obtenir une clé API OpenRouter ?','faq.a11':'Allez sur openrouter.ai → connectez-vous → "Keys" → "Create Key". Des modèles gratuits sont disponibles.',
-    'faq.q12':'Comment configurer ClickUp ?','faq.a12':'Token : ClickUp → Paramètres (avatar en bas à gauche) → Apps → API Token → Copier. List ID : ouvrez votre liste dans ClickUp et regardez l\'URL — le nombre après /list/ est votre List ID.',
-    'faq.q13':'Comment configurer Notion ?','faq.a13':'Token : notion.so/my-integrations → New Integration → copiez l\'Internal Integration Secret. Database ID : ouvrez votre base → Share → Copy link — l\'ID de 32 caractères avant ?v= dans l\'URL. Important : partagez la base avec votre intégration.',
-    'faq.q14':'Comment configurer Asana ?','faq.a14':'API Key : app.asana.com/0/my-apps → Create new token. Team ID : ouvrez votre espace de travail dans Asana → le Team ID est le nombre dans l\'URL après /team/.',
-    'faq.q15':'Comment configurer Linear ?','faq.a15':'API Key : Linear → Paramètres → API → Create key. Project ID : ouvrez votre projet dans Linear → l\'ID est visible dans l\'URL.',
-    'faq.q16':'Comment configurer Trello ?','faq.a16':'API Key + Token : trello.com/app-key — copiez l\'API key, cliquez sur "Token" pour générer le token. Board ID : ouvrez votre tableau → le code court après /b/ dans l\'URL.',
-    'faq.q17':'Comment configurer Jira ?','faq.a17':'API Token : id.atlassian.com/manage-profile/security/api-tokens → Create. Email : votre email Atlassian. Domaine : l\'URL Jira sans https:// (ex : entreprise.atlassian.net). Project Key : le code court à côté du nom du projet (ex : "PROJ").',
+    'faq.q6':'Puis-je utiliser ChuckUp gratuitement ?','faq.a6':'Oui ! Utilisez Google Gemini 2.5 Flash — niveau gratuit : jusqu\'à 1 500 analyses/jour, sans carte bancaire. Allez sur <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → collez dans le champ Gemini API Key → sélectionnez Gemini 2.5 Flash. Sans destination d\'envoi — exportez en Excel, PDF et Word sans frais.',
+    'faq.q7':'Comment obtenir une clé API Google Gemini ?','faq.a7':'Allez sur <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → connectez-vous avec Google → cliquez sur "Get API Key" → Create API Key. Niveau gratuit : 15 req/min, 1 500/jour. Sans carte bancaire.',
+    'faq.q8':'Comment obtenir une clé API Anthropic (Claude) ?','faq.a8':'Allez sur <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → connectez-vous → "API Keys" → "Create Key". Nécessite un compte payant. Modèle recommandé : Claude Sonnet.',
+    'faq.q9':'Comment obtenir une clé API OpenAI ?','faq.a9':'Allez sur <a href="https://platform.openai.com" target="_blank">platform.openai.com</a> → connectez-vous → profil → "API keys" → "Create new secret key". Nécessite un compte payant avec des crédits.',
+    'faq.q10':'Comment obtenir une clé API Mistral ?','faq.a10':'Allez sur <a href="https://console.mistral.ai" target="_blank">console.mistral.ai</a> → connectez-vous → "API Keys" → "Create new key". Niveau d\'essai gratuit disponible.',
+    'faq.q11':'Comment obtenir une clé API OpenRouter ?','faq.a11':'Allez sur <a href="https://openrouter.ai" target="_blank">openrouter.ai</a> → connectez-vous → "Keys" → "Create Key". Des modèles gratuits sont disponibles.',
+    'faq.q12':'Comment configurer ClickUp ?','faq.a12':'Token : allez sur <a href="https://app.clickup.com/settings/apps" target="_blank">ClickUp → Paramètres → Apps → API Token</a> → Copier. List ID : ouvrez votre liste dans ClickUp et regardez l\'URL — le nombre après /list/ est votre List ID.',
+    'faq.q13':'Comment configurer Notion ?','faq.a13':'Token : allez sur <a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a> → New Integration → copiez l\'Internal Integration Secret. Database ID : ouvrez votre base → Share → Copy link — l\'ID de 32 caractères avant ?v= dans l\'URL. Important : partagez la base avec votre intégration.',
+    'faq.q14':'Comment configurer Asana ?','faq.a14':'API Key : allez sur <a href="https://app.asana.com/0/my-apps" target="_blank">app.asana.com/0/my-apps</a> → Create new token. Team ID : ouvrez votre espace de travail dans Asana → le Team ID est le nombre dans l\'URL après /team/.',
+    'faq.q15':'Comment configurer Linear ?','faq.a15':'API Key : allez sur <a href="https://linear.com/settings/api" target="_blank">Linear → Paramètres → API</a> → Create key. Project ID : ouvrez votre projet dans Linear → l\'ID est visible dans l\'URL.',
+    'faq.q16':'Comment configurer Trello ?','faq.a16':'API Key + Token : allez sur <a href="https://trello.com/app-key" target="_blank">trello.com/app-key</a> — copiez l\'API key, cliquez sur "Token" pour générer le token. Board ID : ouvrez votre tableau → le code court après /b/ dans l\'URL.',
+    'faq.q17':'Comment configurer Jira ?','faq.a17':'API Token : allez sur <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank">id.atlassian.com → security → api-tokens</a> → Create. Email : votre email Atlassian. Domaine : l\'URL Jira sans https:// (ex : entreprise.atlassian.net). Project Key : le code court à côté du nom du projet (ex : "PROJ").',
   }
 };
 
