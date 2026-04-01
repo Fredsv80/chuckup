@@ -5407,29 +5407,20 @@ function _tourShow() {
 
   // Wait for tab paint
   requestAnimationFrame(() => setTimeout(() => {
-    let el = document.querySelector(step.sel);
-    // Fallback: highlight whole tab pane
+    const rawEl  = document.querySelector(step.sel);
+    const noData = !rawEl; // element missing — requires a processed document
+
+    let el = rawEl;
     if (!el || el.offsetParent === null) el = document.getElementById('tab-' + step.tab);
 
-    // Scroll element into view instantly so getBoundingClientRect() is accurate
-    el.scrollIntoView({ behavior: 'instant', block: 'center' });
+    const sp = document.getElementById('tourSpotlight');
+    const tt = document.getElementById('tourTooltip');
 
-    setTimeout(() => {
-      const PAD = 10;
-      const r   = el.getBoundingClientRect();
-      const sp  = document.getElementById('tourSpotlight');
-      sp.style.cssText = `display:block;left:${r.left-PAD}px;top:${r.top-PAD}px;width:${r.width+PAD*2}px;height:${r.height+PAD*2}px;`;
-
-      // --- Content first (must set before measuring height) ---
-      const tt = document.getElementById('tourTooltip');
-      tt.style.display = 'block';
-      document.getElementById('tourTitle').textContent = step.title;
-      document.getElementById('tourBody').textContent  = step.body;
+    // Shared controls
+    function _applyControls() {
       document.getElementById('tourCount').textContent = `${tourStep + 1} / ${TOUR_STEPS.length}`;
       document.getElementById('tourBtnNext').textContent = tourStep === TOUR_STEPS.length - 1 ? '🎉 Finish' : 'Next →';
       document.getElementById('tourBtnPrev').style.display = tourStep > 0 ? 'inline-flex' : 'none';
-
-      // Skip-tab button: only when there are more steps in the same tab after this one
       const hasMoreInTab = TOUR_STEPS.slice(tourStep + 1).some(s => s.tab === step.tab);
       const skipBtn = document.getElementById('tourBtnSkipTab');
       skipBtn.style.display = hasMoreInTab ? 'inline-flex' : 'none';
@@ -5437,12 +5428,42 @@ function _tourShow() {
         const nextTab = TOUR_STEPS.find((s, i) => i > tourStep && s.tab !== step.tab);
         skipBtn.textContent = nextTab ? `Skip to ${nextTab.tab.charAt(0).toUpperCase()+nextTab.tab.slice(1)} →` : 'Skip →';
       }
-
-      // --- Progress dots ---
       const prog = document.getElementById('tourProgress');
       prog.innerHTML = TOUR_STEPS.map((_, i) =>
         `<div class="tour-dot ${i < tourStep ? 'done' : i === tourStep ? 'active' : ''}"></div>`
       ).join('');
+    }
+
+    if (noData) {
+      // No spotlight — center tooltip and show a note
+      sp.style.display = 'none';
+      tt.style.display = 'block';
+      tt.style.transform = 'translate(-50%, -50%)';
+      tt.style.left = '50%';
+      tt.style.top  = '50%';
+      document.getElementById('tourTitle').textContent = step.title;
+      document.getElementById('tourBody').innerHTML =
+        `<span style="display:inline-block;background:rgba(245,166,35,0.12);border-left:3px solid #f5a623;padding:4px 8px;border-radius:4px;margin-bottom:8px;font-size:0.8rem;color:#f5a623;">📄 This step requires a processed document.</span><br>${step.body}`;
+      _applyControls();
+      return;
+    }
+
+    // Normal flow — reset centering from any prior noData step
+    tt.style.transform = '';
+
+    // Scroll element into view instantly so getBoundingClientRect() is accurate
+    el.scrollIntoView({ behavior: 'instant', block: 'center' });
+
+    setTimeout(() => {
+      const PAD = 10;
+      const r   = el.getBoundingClientRect();
+      sp.style.cssText = `display:block;left:${r.left-PAD}px;top:${r.top-PAD}px;width:${r.width+PAD*2}px;height:${r.height+PAD*2}px;`;
+
+      // --- Content first (must set before measuring height) ---
+      tt.style.display = 'block';
+      document.getElementById('tourTitle').textContent = step.title;
+      document.getElementById('tourBody').textContent  = step.body;
+      _applyControls();
 
       // --- Tooltip position (measured after content is rendered) ---
       const ttW    = tt.offsetWidth  || 320;
