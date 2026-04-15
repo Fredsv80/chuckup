@@ -1805,7 +1805,7 @@ const PUSH_PROVIDER_CONFIG = {
     name: 'ClickUp', icon: '🟣',
     fields: [
       { slot: 0, key: 'token',  label: 'ClickUp API Token',  placeholder: 'pk_…',         type: 'password', hint: 'ClickUp → Settings → Apps → API Token',                storage: 'chuckup_push_clickup_token'  },
-      { slot: 1, key: 'listId', label: 'ClickUp List ID',    placeholder: '901234567890',  type: 'text',     hint: 'Visible in URL: …/list/<strong>LIST_ID</strong>',       storage: 'chuckup_push_clickup_listid' },
+      { slot: 1, key: 'listId', label: 'ClickUp List ID',    placeholder: '901234567890',  type: 'text',     hint: 'Paste the number from the URL after /li/ — e.g. <strong>901522405965</strong>',  storage: 'chuckup_push_clickup_listid' },
     ],
   },
   notion: {
@@ -2037,13 +2037,27 @@ function switchPushProvider(provider) {
     <div class="field-group">
       <label>${f.label}</label>
       <div class="input-wrap">
-        <input type="${f.type}" id="push-field-${f.slot}" placeholder="${f.placeholder}" value="${(localStorage.getItem(f.storage)||'').replace(/"/g,'&quot;')}" oninput="savePushKeys()" />
+        <input type="${f.type}" id="push-field-${f.slot}" placeholder="${f.placeholder}" value="${(localStorage.getItem(f.storage)||'').replace(/"/g,'&quot;')}" oninput="sanitizePushListId(this,'${f.key}');savePushKeys()" />
         ${f.type === 'password' ? `<button class="eye-btn" onclick="toggleEye('push-field-${f.slot}',this)">👁</button>` : ''}
       </div>
       <div class="hint">${f.hint}</div>
     </div>
   `).join('');
 
+}
+
+function sanitizePushListId(el, key) {
+  // Only sanitize list/board ID fields when user pastes a full URL
+  if (key !== 'listId' && key !== 'boardId') return;
+  const v = el.value;
+  if (!v.includes('://')) return; // not a URL, leave it alone
+  if (currentPushProvider === 'clickup') {
+    const m = v.match(/\/li\/(\d+)/);
+    if (m) { el.value = m[1]; return; }
+  }
+  // Generic: grab last numeric segment from URL
+  const m = v.match(/\/(\d{6,})(?:[/?#]|$)/);
+  if (m) el.value = m[1];
 }
 
 function savePushKeys() {
@@ -2993,9 +3007,15 @@ function renderResults(data, sections) {
 // ─── ClickUp helpers ──────────────────────────────────────────────────────────
 function getClickupConfig() {
   const token  = getPushFieldValue('token');
-  const listId = getPushFieldValue('listId');
+  let   listId = getPushFieldValue('listId');
   if (!token)  throw new Error('ClickUp API token is missing.');
   if (!listId) throw new Error('ClickUp List ID is missing.');
+  // Auto-extract numeric ID if user pasted a full ClickUp URL
+  const urlMatch = listId.match(/\/li\/(\d+)/);
+  if (urlMatch) listId = urlMatch[1];
+  // Strip anything that isn't a digit
+  listId = listId.replace(/\D/g, '');
+  if (!listId) throw new Error('ClickUp List ID is invalid. Paste only the number from the URL (e.g. 901522405965).');
   return { token, listId };
 }
 
