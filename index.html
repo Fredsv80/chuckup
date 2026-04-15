@@ -3113,7 +3113,11 @@ async function clickupPost(endpoint, token, body) {
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err?.err || err?.message || `ClickUp HTTP ${res.status}`);
+    const msg = err?.err || err?.message || `ClickUp HTTP ${res.status}`;
+    if (res.status === 404) throw new Error(`List not found (404). Check your ClickUp List ID in Settings — it should be the number in the URL after /list/`);
+    if (res.status === 401) throw new Error(`Unauthorised (401). Your ClickUp API Token may be invalid or expired — regenerate it in ClickUp → Settings → Apps → API Token`);
+    if (res.status === 403) throw new Error(`Forbidden (403). Your ClickUp token doesn't have access to this list. Make sure the token belongs to the same workspace as the list.`);
+    throw new Error(msg);
   }
   return res.json();
 }
