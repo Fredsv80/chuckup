@@ -545,6 +545,26 @@
     .chevron { transition: transform 0.2s; font-size: 0.75rem; color: var(--text-muted); }
     .chevron.open { transform: rotate(180deg); }
 
+    /* Select all bar */
+    .ai-select-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+    .ai-select-counter {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      flex: 1;
+    }
+    .btn-xs {
+      padding: 3px 10px;
+      font-size: 0.75rem;
+      border-radius: 6px;
+    }
+
     /* Action item chips */
     .ai-section-header {
       font-size: 0.72rem;
@@ -2977,6 +2997,37 @@ function renderResults(data, sections) {
 
       const ul = document.createElement('ul');
       ul.className = 'ai-list';
+
+      // ── Select All / Deselect All toolbar ──
+      const selectBar = document.createElement('div');
+      selectBar.className = 'ai-select-bar';
+      const totalCount = val.length;
+      const defaultCheckedCount = fredItems.length;
+      const counter = document.createElement('span');
+      counter.className = 'ai-select-counter';
+      counter.textContent = `${defaultCheckedCount} / ${totalCount} selected`;
+      const selectAllBtn = document.createElement('button');
+      selectAllBtn.className = 'btn btn-xs btn-secondary';
+      selectAllBtn.textContent = 'Select All';
+      selectAllBtn.onclick = () => {
+        ul.querySelectorAll('.ai-check').forEach(cb => { cb.checked = true; cb.closest('.ai-item').classList.remove('deselected'); });
+        counter.textContent = `${ul.querySelectorAll('.ai-check:checked').length} / ${totalCount} selected`;
+      };
+      const deselectAllBtn = document.createElement('button');
+      deselectAllBtn.className = 'btn btn-xs btn-secondary';
+      deselectAllBtn.textContent = 'Deselect All';
+      deselectAllBtn.onclick = () => {
+        ul.querySelectorAll('.ai-check').forEach(cb => { cb.checked = false; cb.closest('.ai-item').classList.add('deselected'); });
+        counter.textContent = `0 / ${totalCount} selected`;
+      };
+      // Update counter whenever a checkbox changes
+      ul.addEventListener('change', () => {
+        counter.textContent = `${ul.querySelectorAll('.ai-check:checked').length} / ${totalCount} selected`;
+      });
+      selectBar.appendChild(counter);
+      selectBar.appendChild(selectAllBtn);
+      selectBar.appendChild(deselectAllBtn);
+      body.insertBefore(selectBar, body.firstChild);
 
       if (fredItems.length) {
         const fredHeader = document.createElement('div');
