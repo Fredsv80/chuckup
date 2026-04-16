@@ -1303,7 +1303,10 @@
 
     <div class="results-section" id="results-section">
       <div class="card">
-        <div class="card-header"><h2 data-i18n="process.results">Extracted Results</h2></div>
+        <div class="card-header">
+          <h2 data-i18n="process.results">Extracted Results</h2>
+          <span id="results-source-badge" class="source-detected-badge" style="display:none;"></span>
+        </div>
         <div id="results-container"></div>
       </div>
       <div class="card">
@@ -2120,11 +2123,22 @@ function switchTab(name) {
 function applyDetectedSourceType(type) {
   sourceType = type;
   const isEmail = type === 'email';
+  const label   = isEmail ? '✉️ Email' : '🎙️ Transcript';
   document.getElementById('upload-step-title').textContent = 'Upload PDF';
   document.getElementById('upload-icon').textContent = isEmail ? '✉️' : '🎙️';
+  // Badge in upload card
   const badge = document.getElementById('detected-badge');
   badge.textContent = isEmail ? '✉️ Email detected' : '🎙️ Transcript detected';
   badge.style.display = 'inline-block';
+  // Badge in results header (visible after scroll)
+  const resultsBadge = document.getElementById('results-source-badge');
+  if (resultsBadge) {
+    resultsBadge.textContent = label;
+    resultsBadge.style.display = 'inline-block';
+    resultsBadge.style.background = isEmail ? 'rgba(0,194,255,0.12)' : 'rgba(124,92,252,0.12)';
+    resultsBadge.style.color = isEmail ? 'var(--accent2)' : 'var(--accent)';
+    resultsBadge.style.border = `1px solid ${isEmail ? 'var(--accent2)' : 'var(--accent)'}`;
+  }
 }
 
 // ─── Persist keys ───────────────────────────────────────────────────────────
@@ -3526,6 +3540,7 @@ async function pushActionItems(parentId = null) {
 async function pushAttachmentReminder(parentId) {
   const attachments = extractedData.attachments_detected;
   if (!attachments?.length) return;
+  if (sourceType !== 'email') return;             // Only emails can have unextractable attachments
   if (currentPushProvider !== 'clickup') return; // Attachment reminder only supported on ClickUp
   try {
     const { token, listId } = getClickupConfig();
